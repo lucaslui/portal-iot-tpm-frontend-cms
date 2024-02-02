@@ -1,0 +1,30 @@
+@import "../../styles/colors.scss";
+
+.textareaWrap {
+  display: flex; 
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+
+  textarea {
+    padding-right: 32px;
+    width: 100%;
+    height: 100%;
+
+    &[data-status="valid"] {
+      border-color: $valid;
+    }
+  
+    &[data-status="invalid"] {
+      border-color: $invalid;    
+    }
+  }
+
+  .status {
+    position: absolute;
+    font-size: 0.8rem;
+    right: 10px;
+    top: 14px;
+    cursor: help;
+  }
+}

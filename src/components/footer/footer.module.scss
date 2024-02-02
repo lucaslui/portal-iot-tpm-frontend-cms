@@ -1,0 +1,15 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+
+  span {
+    color: $secondary-color;
+    font-size: 0.8rem;
+  }
+}

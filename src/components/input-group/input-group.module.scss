@@ -1,0 +1,16 @@
+@import "../../styles/colors.scss";
+@import "../../styles/spaces.scss";
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  span {
+    margin-bottom: $group-gap;
+  }
+
+  .mr {
+    margin-right: $outside-gap;
+  }
+}

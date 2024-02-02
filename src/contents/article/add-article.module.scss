@@ -1,0 +1,56 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.form {
+  display: block;
+  margin-top: $outside-gap;
+
+  .testee {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .halfsize {
+      min-width: 400px;
+    }
+
+    .pr {
+      margin-right: $outside-gap;
+    }
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    // flex-wrap: wrap;
+
+    .mr {
+      margin-right: $outside-gap;
+    }
+
+    button {
+      margin-bottom: $outside-gap;
+      margin-top: $outside-gap;
+      align-self: flex-end;
+      width: 220px;
+    }
+
+    .selectGroup {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      label {
+        margin-bottom: $group-gap;
+      }
+
+      select {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

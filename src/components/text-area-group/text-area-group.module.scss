@@ -1,0 +1,12 @@
+@import "../../styles/colors.scss";
+@import "../../styles/spaces.scss";
+
+.textareaGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  span {
+    margin-bottom: $group-gap;
+  }
+}

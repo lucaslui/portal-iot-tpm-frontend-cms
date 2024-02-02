@@ -1,0 +1,36 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.form {
+  display: block;
+  margin-top: $outside-gap;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+
+    button {
+      align-self: flex-end;
+      width: 220px;
+    }
+  }
+  // .editor {
+  //   .quill {
+  //     margin-top: 10px;
+  //     margin-bottom: 20px;
+
+  //     .ql-toolbar {
+  //       background-color: $background-color;
+  //       .ql-snow {
+  //         .ql-fill {
+  //           color: $primary-color;
+  //         }
+  //       }
+  //     }
+
+  //     .ql-container {
+  //       background-color: $background-color;
+  //     }
+  //   }
+  // }
+}
