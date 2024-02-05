@@ -7,7 +7,6 @@
     font-family: 'Orbitron', sans-serif;
     letter-spacing: .1rem;
     margin: 0;
-    padding: 0;
     outline: none;
     border: none;
     list-style: none;
@@ -67,9 +66,9 @@ select {
     color: $primary-color;
     border: 1px solid #636e7b;
     border-radius: 4px;
-    padding: 0px 12px;
+    padding: 0px 16px;
     outline: none;
-    height: 40px;
+    height: 48px;
 
     &:focus {
         box-shadow: inset 0 0 0 2px $focus-color;
@@ -92,30 +91,6 @@ textarea {
 
     &:focus {
         box-shadow: inset 0 0 0 2px $focus-color;
-    }
-}
-
-button {
-    background-color: #347d39;
-    color: $secondary-color;
-    border: none;
-    line-height: 40px;
-    border-radius: 8px;
-
-    &:hover {
-        opacity: 0.8;
-    }
-
-    &:focus {
-        outline-color: $primary-color;
-    }
-
-    &:disabled {
-        background-color: $disabled-color;
-
-        &:hover {
-            opacity: 1;
-        }
     }
 }
 

@@ -1,0 +1,26 @@
+@import '../../styles/colors.scss';
+
+.custom_button {
+    background-color: #347d39;
+    color: $secondary-color;
+    border: none;
+    line-height: 40px;
+    border-radius: 8px;
+
+    &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+    }
+
+    &:focus {
+        outline-color: $primary-color;
+    }
+
+    &:disabled {
+        background-color: $disabled-color;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
