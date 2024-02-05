@@ -15,33 +15,38 @@ import DeleteArticle from './contents/article/delete-article'
 import AddCategory from './contents/category/add-category'
 import AccountSettings from './contents/account/settings'
 import EditProfile from './contents/profile/edit-profile'
+import LoadArticles from './contents/article/load-articles'
+
+import { PrimeReactProvider } from 'primereact/api';
 
 const App: React.FC = () => {
     return (
         <AccountProvider>
             <BrowserRouter>
-                <Routes>
-                    <Route element={<PrivateRoute />}>
-                        <Route path="/" element={<PanelLayout />} >
-                            <Route index element={<Navigate to="dashboard" replace />} />
-                            <Route index path="dashboard" element={<DashboardPage />} />
-                            <Route path='edit-profile' element={<EditProfile/>} />
-                            <Route path='add-article' element={<AddArticle/>} />
-                            <Route path='edit-article' element={<AddArticle/>} />
-                            <Route path='load-articles' element={<AddArticle/>} />
-                            <Route path='delete-article' element={<DeleteArticle/>} />
-                            <Route path='add-category' element={<AddCategory/>} />
-                            <Route path='edit-category' element={<AddCategory/>} />
-                            <Route path='load-categories' element={<AddCategory/>} />
-                            <Route path='delete-category' element={<AddCategory/>} />
-                            <Route path='account-settings' element={<AccountSettings/>} />
+                <PrimeReactProvider>
+                    <Routes>
+                        <Route element={<PrivateRoute />}>
+                            <Route path="/" element={<PanelLayout />} >
+                                <Route index element={<Navigate to="dashboard" replace />} />
+                                <Route index path="dashboard" element={<DashboardPage />} />
+                                <Route path='edit-profile' element={<EditProfile />} />
+                                <Route path='add-article' element={<AddArticle />} />
+                                <Route path='edit-article' element={<AddArticle />} />
+                                <Route path='load-articles' element={<LoadArticles />} />
+                                <Route path='delete-article' element={<DeleteArticle />} />
+                                <Route path='add-category' element={<AddCategory />} />
+                                <Route path='edit-category' element={<AddCategory />} />
+                                <Route path='load-categories' element={<AddCategory />} />
+                                <Route path='delete-category' element={<AddCategory />} />
+                                <Route path='account-settings' element={<AccountSettings />} />
+                            </Route>
                         </Route>
-                    </Route>
-                    <Route path="auth" element={<AuthLayout />} >
-                        <Route path="signin" element={<SignInPage />} />
-                        <Route path="signup" element={<SignUpPage />} />
-                    </Route>
-                </Routes>
+                        <Route path="auth" element={<AuthLayout />} >
+                            <Route path="signin" element={<SignInPage />} />
+                            <Route path="signup" element={<SignUpPage />} />
+                        </Route>
+                    </Routes>
+                </PrimeReactProvider>
             </BrowserRouter>
         </AccountProvider>
     )

@@ -16,9 +16,8 @@ export type SignUpParams = {
 }
 
 const signin = async (params: SignInParams) => {
-    console.log()
     const httpResponse = await axios.request({
-        url: `http://localhost:5050/api/login`,
+        url: `${import.meta.env.VITE_API_URL}/api/login`,
         method: 'post',
         data: params
     })
@@ -32,7 +31,7 @@ const signin = async (params: SignInParams) => {
 
 const signup = async (params: SignUpParams) => {
     const httpResponse = await axios.request({
-        url: `http://localhost:5050/api/signup`,
+        url: `${import.meta.env.VITE_API_URL}/api/signup`,
         method: 'post',
         data: params
     })

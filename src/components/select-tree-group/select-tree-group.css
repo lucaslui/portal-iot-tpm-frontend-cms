@@ -1,0 +1,20 @@
+.p-treeselect {
+    font-size: 0.8rem;
+    background: #373e48 !important;
+    border: 1px solid #636e7b;
+}
+
+.p-treeselect-panel .p-treeselect-header {
+    padding: 0;
+    background: #373e48;
+}
+
+.p-tree {
+    font-size: 0.8rem;
+    padding: 0;
+    background: #2a3036 !important;
+}
+
+.p-treenode-content {
+    padding: 0;
+}

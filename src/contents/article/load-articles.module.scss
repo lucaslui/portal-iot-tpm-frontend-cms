@@ -1,0 +1,40 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.load_articles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+
+    table {
+        margin-top: 12px;
+
+        border-collapse: collapse;
+
+        thead {
+            font-size: 1rem;
+
+            th {
+                padding: 12px;
+                text-align: center;
+            }
+        }
+
+        tbody {
+            font-size: 0.8rem;
+
+            tr {
+                td {
+                    padding: 12px;
+                    text-align: center;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    background: #2d333b;
+                }
+            }
+        }
+    }
+}

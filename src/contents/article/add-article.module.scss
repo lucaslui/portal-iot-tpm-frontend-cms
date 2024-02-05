@@ -1,56 +1,66 @@
 @import '../../styles/colors.scss';
 @import '../../styles/spaces.scss';
 
-.form {
-  display: block;
-  margin-top: $outside-gap;
+.add_article {
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
 
-  .testee {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
+        gap: 20px;
 
-    .halfsize {
-      min-width: 400px;
+        padding: 24px;
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: stretch;
+
+            gap: 16px;
+
+            .mr {
+                margin-right: $outside-gap;
+            }
+
+            .group {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: stretch;
+
+                gap: 8px;
+
+                label {
+                    font-size: 1rem;
+
+                    span {
+                        font-size: 0.7rem;
+                        color: $secondary-color;
+                    }
+                }
+
+                select {
+                    option {
+                        margin: 8px;
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+
+        .row_editor {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+
+            gap: 8px;
+        }
     }
 
-    .pr {
-      margin-right: $outside-gap;
+    .full_width {
+        flex: 1;
     }
-  }
-
-  .row {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    // flex-wrap: wrap;
-
-    .mr {
-      margin-right: $outside-gap;
-    }
-
-    button {
-      margin-bottom: $outside-gap;
-      margin-top: $outside-gap;
-      align-self: flex-end;
-      width: 220px;
-    }
-
-    .selectGroup {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-
-      label {
-        margin-bottom: $group-gap;
-      }
-
-      select {
-        margin-bottom: 15px;
-      }
-    }
-  }
 }

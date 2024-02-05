@@ -5,7 +5,7 @@ import styles from './signin.module.scss'
 
 import AccountContext from '../../contexts/account-context'
 
-import { Button, FormStatus, Input, Logo } from '../../components'
+import { CustomButton, FormStatus, Input, Logo } from '../../components'
 import { signin } from '../../services/auth-service'
 
 const SignInPage: React.FC = () => {
@@ -70,7 +70,7 @@ const SignInPage: React.FC = () => {
                 <h2>Login</h2>
                 <Input onChange={handleChange} title={state.emailError} type="email" name="email" placeholder="Digite seu e-mail" />
                 <Input onChange={handleChange} title={state.passwordError} type="password" name="password" placeholder="Digite sua senha" />
-                <Button disabled={state.isFormInvalid} type="submit"> Entrar </Button>
+                <CustomButton disabled={state.isFormInvalid} type="submit"> Entrar </CustomButton>
                 <Link to="/auth/signup" className={styles.link}>Não tem cadastro? Cadastre-se aqui</Link>
                 <FormStatus isLoading={state.isLoading} mainError={state.mainError} />
             </div>

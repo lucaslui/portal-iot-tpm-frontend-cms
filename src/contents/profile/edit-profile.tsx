@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import styles from './edit-profile.module.scss'
 
-import { PageTitle, InputGroup, TextAreaGroup, FormStatus, Button } from '../../components'
+import { PageTitle, InputGroup, TextAreaGroup, FormStatus, CustomButton } from '../../components'
 
 
 const EditProfile: React.FC = () => {
@@ -64,7 +64,7 @@ const EditProfile: React.FC = () => {
         </div>
         <div className={styles.row}>
           <FormStatus isLoading={state.isLoading} mainError={state.mainError} />
-          <Button disabled={state.isFormInvalid} type="submit" value="Editar"> Editar </Button>
+          <CustomButton disabled={state.isFormInvalid} type="submit" value="Editar"> Editar </CustomButton>
         </div>
       </form>
     </>

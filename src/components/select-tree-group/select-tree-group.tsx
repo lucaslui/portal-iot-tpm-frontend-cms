@@ -1,41 +1,28 @@
 import React from 'react'
-import DropdownTreeSelect from 'react-dropdown-tree-select'
+import { TreeSelect } from 'primereact/treeselect';
 
-import Styles from './select-tree-group.module.scss'
-import 'react-dropdown-tree-select/dist/styles.css'
+import "primereact/resources/themes/md-dark-indigo/theme.css";
 
-type Props = any
+import "./select-tree-group.css";
 
-class SelectTreeGroup extends React.Component<Props, { data: string }> {
-  constructor (props) {
-    super(props)
-    this.state = { data: props.data }
-  }
+type Props = {
+    nodes: any
+    value: any
+    onChange: (e: any) => void
+}
 
-  UNSAFE_componentWillReceiveProps = (nextProps): void => {
-    if (!(JSON.stringify(nextProps.data) === JSON.stringify(this.state.data))) {
-      this.setState({ data: nextProps.data })
-    }
-  }
-
-  shouldComponentUpdate = (nextProps): boolean => {
-    return !(JSON.stringify(nextProps.data) === JSON.stringify(this.state.data))
-  }
-
-  render (): any {
-    const { data, label, ...rest } = this.props
+const SelectTreeGroup: React.FC<Props> = (props: Props) => {
     return (
-      <div className={`${Styles.selectTreeGroup}`}>
-        <label> {label} </label>
-        <DropdownTreeSelect
-          data={this.state.data}
-          {...rest}
-          keepTreeOnSearch={true}
-          keepChildrenOnSearch={true}
-        />
-      </div>
+        <TreeSelect
+            value={props.value}
+            onChange={props.onChange}
+            options={props.nodes}
+            metaKeySelection={false}
+            filter
+            className='p-mr-15'
+            selectionMode="multiple"
+            placeholder="Selecione as categorias..." />
     )
-  }
 }
 
 export default SelectTreeGroup

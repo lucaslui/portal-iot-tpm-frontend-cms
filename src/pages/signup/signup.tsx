@@ -7,7 +7,7 @@ import AccountContext from '../../contexts/account-context'
 
 import { signup } from '../../services/auth-service'
 
-import { Logo, Input, Button, FormStatus } from '../../components'
+import { Logo, Input, CustomButton, FormStatus } from '../../components'
 
 const SignUpPage: React.FC = () => {
     const { setCurrentAccount } = useContext(AccountContext)
@@ -85,7 +85,7 @@ const SignUpPage: React.FC = () => {
                 <Input onChange={handleChange} title={state.emailError} type="email" name="email" placeholder="Digite seu e-mail" />
                 <Input onChange={handleChange} title={state.passwordError} type="password" name="password" placeholder="Digite sua senha" />
                 <Input onChange={handleChange} title={state.passwordConfirmationError} type="password" name="passwordConfirmation" placeholder="Digite sua senha novamente" />
-                <Button disabled={state.isFormInvalid} type="submit" value="Criar"> Criar </Button>
+                <CustomButton disabled={state.isFormInvalid} type="submit" value="Criar"> Criar </CustomButton>
                 <Link to="/auth/signin" className={styles.link}> Já tem cadastro? clique aqui </Link>
                 <FormStatus isLoading={state.isLoading} mainError={state.mainError} />
             </div>

@@ -54,7 +54,7 @@ const DeleteArticle: React.FC = () => {
   }, [])
 
   const fetchData = async (): Promise<any> => {
-    const result = await axios.get('https://espaco-de-conhecimento-backend.herokuapp.com/api/articles')
+    const result = await axios.get(`${import.meta.env.VITE_API_URL}/api/articles`)
     return result.data
   }
 
