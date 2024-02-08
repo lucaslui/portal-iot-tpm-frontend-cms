@@ -7,6 +7,7 @@ import AccountContext from '../../contexts/account-context'
 
 import { PageTitle, CustomButton, FormStatus, SelectTreeGroup } from '../../components'
 import RichTextEditor from '../../components/rich-text-editor/rich-text-editor'
+import { AddArticleParams, addArticle } from '../../services/article-service'
 
 const AddArticle: React.FC = () => {
     const { getCurrentAccount } = useContext(AccountContext)
@@ -25,13 +26,13 @@ const AddArticle: React.FC = () => {
         successMessage: ''
     })
 
-    const [article, setArticle] = useState({
+    const [article, setArticle] = useState<AddArticleParams>({
         title: '',
         description: '',
         content: '',
-        imageUrl: '',
+        imageBinary: new File([''], 'filename'),
         type: '',
-        categoryId: []
+        categoryIds: [] as string[]
     })
 
     useEffect(() => {
@@ -46,10 +47,6 @@ const AddArticle: React.FC = () => {
         categoryParentId: '',
         children: []
     }])
-
-    const [selectState, setSelectState] = useState({
-        selectedOption: null
-    })
 
     useEffect((): void => {
         fetchData()
@@ -90,21 +87,30 @@ const AddArticle: React.FC = () => {
         return build
     }
 
+    const buildValues = (categoryIds: string[]): any => {
+        const values = {} as { [categoryId: string]: boolean }
+        categoryIds.forEach(id => { values[id] = true })
+        return values
+    }
+
     const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
         setArticle({ ...article, [event.target.name]: event.target.value })
+    }
+
+    const handleImageChange = (event: any): void => {
+        setArticle({ ...article, [event.target.name]: event.target.files[0] })
     }
 
     const handleChangeTextArea = (event: React.FocusEvent<HTMLTextAreaElement>): void => {
         setArticle({ ...article, [event.target.name]: event.target.value })
     }
 
-    const handleSelectChange = (selectedOption): void => {
-        setSelectState({ selectedOption })
+    const handleSelectChange = (selectedOption: any): void => {
         setArticle(oldState => ({ ...oldState, type: selectedOption.value }))
     }
 
     const handleSelectTreeChange = (event: any): void => {
-        setArticle(oldState => ({ ...oldState, categoryId: event.value }))
+        setArticle(oldState => ({ ...oldState, categoryIds: Object.keys(event.value) }))
     }
 
     const handleEditorChange = (content: string): void => {
@@ -117,18 +123,7 @@ const AddArticle: React.FC = () => {
             if (!state.isLoading && !state.isFormInvalid) {
                 setState(oldState => ({ ...oldState, isLoading: true }))
                 const token = getCurrentAccount()?.accessToken
-                await axios.request({
-                    url: `${import.meta.env.VITE_API_URL}/api/articles`,
-                    method: 'POST',
-                    data: {
-                        title: article.title,
-                        description: article.description,
-                        content: article.content,
-                        imageUrl: article.imageUrl,
-                        categoryId: article.categoryId
-                    },
-                    headers: { 'x-access-token': token }
-                })
+                await addArticle(article, token)
                 setState(oldState => ({ ...oldState, isLoading: false }))
                 setErrors(oldState => ({ ...oldState, successMessage: 'Artigo adicionado!' }))
             }
@@ -154,24 +149,15 @@ const AddArticle: React.FC = () => {
                         />
                     </div>
                     <div className={`${styles.group} ${styles.full_width}`}>
-                        <label htmlFor="image">Image de Capa <span>(máx: 100 caracteres)</span></label>
+                        <label htmlFor="image">Image de Capa</label>
                         <input
                             type="file"
-                            id="title"
-                            name="title"
-                            placeholder='Digite o título do artigo...'
-                            onChange={handleChange}
+                            id="image"
+                            name="imageBinary"
+                            placeholder='Insira a imagem de capa do artigo...'
+                            onChange={handleImageChange}
                         />
                     </div>
-                    {/*
-                    <InputGroup
-                        onChange={handleChange}
-                        title={errors.imageUrlError}
-                        type="text"
-                        name="imageUrl"
-                        span="Imagem de Capa (.jpg/.jpeg/.png):"
-                        placeholder="Digite o link de uma imagem para utilizar como capa para o artigo"
-                    /> */}
                 </div>
                 <div className={styles.row}>
                     <div className={`${styles.group}`}>
@@ -188,7 +174,7 @@ const AddArticle: React.FC = () => {
                         <label htmlFor="type">Categoria de Artigo</label>
                         <SelectTreeGroup
                             nodes={refitNodes(categories)}
-                            value={article.categoryId}
+                            value={buildValues(article.categoryIds)}
                             onChange={handleSelectTreeChange}
                         />
                     </div>

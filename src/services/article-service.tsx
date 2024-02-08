@@ -13,14 +13,31 @@ export type LoadArticlesParams = {
     year?: number
 }
 
-const loadArticles = async (params?: LoadArticlesParams): Promise<ArticleModel[]> => {
+export type AddArticleParams = {
+    title: string
+    description: string
+    content: string
+    imageBinary: File
+    type: string
+    categoryIds: string[]
+}
+
+const addArticle = async (params: AddArticleParams, accessToken: string): Promise<ArticleModel> => {
+    const data = new FormData() 
+    
+    data.append('title', params.title)
+    data.append('description', params.description)
+    data.append('content', params.content)
+    data.append('imageBinary', params.imageBinary)
+    data.append('type', params.type)
+    data.append('categoryIds', JSON.stringify(params.categoryIds))
+    
     const httpResponse = await axios.request({
         url: `${import.meta.env.VITE_API_URL}/api/articles`,
-        method: 'get',
-        data: params
+        method: 'POST',
+        data,
+        headers: { 'x-access-token': accessToken }
     })
-
-    console.log(httpResponse)
 
     switch (httpResponse.status) {
         case 200: return httpResponse.data
@@ -29,4 +46,18 @@ const loadArticles = async (params?: LoadArticlesParams): Promise<ArticleModel[]
     }
 }
 
-export { loadArticles }
+const loadArticles = async (params?: LoadArticlesParams): Promise<ArticleModel[]> => {
+    const httpResponse = await axios.request({
+        url: `${import.meta.env.VITE_API_URL}/api/articles`,
+        method: 'get',
+        data: params
+    })
+
+    switch (httpResponse.status) {
+        case 200: return httpResponse.data
+        case 403: throw new InvalidCredentialsError()
+        default: throw new UnexpectedError()
+    }
+}
+
+export { addArticle, loadArticles }
