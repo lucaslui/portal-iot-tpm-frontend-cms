@@ -55,7 +55,7 @@ const SignUpPage: React.FC = () => {
                     passwordConfirmation: state.passwordConfirmation
                 })
                 if (account?.accessToken) {
-                    setCurrentAccount && setCurrentAccount({ accessToken: account.accessToken })
+                    setCurrentAccount && setCurrentAccount({ accessToken: account.accessToken, userId: account.userId })
                     navigate('/')
                 }
             }

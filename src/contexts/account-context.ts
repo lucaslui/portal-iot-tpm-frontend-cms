@@ -13,6 +13,7 @@ const AccountContext = createContext<Props>(
         getCurrentAccount: () => {
             return {
                 accessToken: '',
+                userId: ''
             }
         },
         removeCurrentAccount: () => {}

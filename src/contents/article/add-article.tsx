@@ -8,6 +8,9 @@ import AccountContext from '../../contexts/account-context'
 import { PageTitle, CustomButton, FormStatus, SelectTreeGroup } from '../../components'
 import RichTextEditor from '../../components/rich-text-editor/rich-text-editor'
 import { AddArticleParams, addArticle } from '../../services/article-service'
+import InputImage from '../../components/input-image/input-image'
+
+import NoImage from '../../assets/imgs/no-image.svg'
 
 const AddArticle: React.FC = () => {
     const { getCurrentAccount } = useContext(AccountContext)
@@ -30,7 +33,7 @@ const AddArticle: React.FC = () => {
         title: '',
         description: '',
         content: '',
-        imageBinary: new File([''], 'filename'),
+        imageBinary: null,
         type: '',
         categoryIds: [] as string[]
     })
@@ -97,8 +100,8 @@ const AddArticle: React.FC = () => {
         setArticle({ ...article, [event.target.name]: event.target.value })
     }
 
-    const handleImageChange = (event: any): void => {
-        setArticle({ ...article, [event.target.name]: event.target.files[0] })
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setArticle({ ...article, [event.target.name]: event.target.files?.[0] })
     }
 
     const handleChangeTextArea = (event: React.FocusEvent<HTMLTextAreaElement>): void => {
@@ -106,7 +109,7 @@ const AddArticle: React.FC = () => {
     }
 
     const handleSelectChange = (selectedOption: any): void => {
-        setArticle(oldState => ({ ...oldState, type: selectedOption.value }))
+        setArticle(oldState => ({ ...oldState, type: selectedOption.target.value }))
     }
 
     const handleSelectTreeChange = (event: any): void => {
@@ -127,7 +130,7 @@ const AddArticle: React.FC = () => {
                 setState(oldState => ({ ...oldState, isLoading: false }))
                 setErrors(oldState => ({ ...oldState, successMessage: 'Artigo adicionado!' }))
             }
-        } catch (error) {
+        } catch (error: any) {
             setState({ ...state, isLoading: false })
             setErrors({ ...errors, mainError: error.message })
         }
@@ -138,59 +141,60 @@ const AddArticle: React.FC = () => {
             <PageTitle title='Adicionar Artigo' />
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.row}>
-                    <div className={`${styles.group} ${styles.full_width}`}>
-                        <label htmlFor="title">Título do Artigo <span>(máx: 100 caracteres)</span></label>
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            placeholder='Digite o título do artigo...'
-                            onChange={handleChange}
-                        />
+                    <div className={styles.col}>
+                        <div className={styles.row}>
+                            <div className={`${styles.group} ${styles.full_width}`}>
+                                <label htmlFor="title">Título do Artigo <span>(máx: 100 caracteres)</span></label>
+                                <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                    placeholder='Digite o título do artigo...'
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.row}>
+                            <div className={`${styles.group}`}>
+                                <label htmlFor="type">Tipo de Artigo:</label>
+                                <select className={styles.type} id="type" name="type" onChange={handleSelectChange}>
+                                    <option value="" disabled selected hidden>Selecione o tipo do artigo...</option>
+                                    <option value='concepts'>Artigo</option>
+                                    <option value='news'>Notícia</option>
+                                    <option value='tutorials'>Tutorial</option>
+                                    <option value='projects'>Projeto</option>
+                                </select>
+                            </div>
+                            <div className={`${styles.group} ${styles.full_width}`}>
+                                <label htmlFor="type">Categoria de Artigo</label>
+                                <SelectTreeGroup
+                                    nodes={refitNodes(categories)}
+                                    value={buildValues(article.categoryIds)}
+                                    onChange={handleSelectTreeChange}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.row}>
+                            <div className={`${styles.group} ${styles.full_width}`}>
+                                <label htmlFor="description">Resumo do Artigo <span>(máx: 200 caracteres)</span></label>
+                                <textarea
+                                    className={styles.bigInput}
+                                    id="description"
+                                    name="description"
+                                    placeholder='Digite o resumo do artigo...'
+                                    onChange={handleChangeTextArea}
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <div className={`${styles.group} ${styles.full_width}`}>
-                        <label htmlFor="image">Image de Capa</label>
-                        <input
-                            type="file"
-                            id="image"
-                            name="imageBinary"
-                            placeholder='Insira a imagem de capa do artigo...'
-                            onChange={handleImageChange}
-                        />
-                    </div>
+                    <InputImage
+                        name='imageBinary'
+                        imageFile={article.imageBinary}
+                        imageDefault={NoImage}
+                        onChange={handleImageChange}
+                        placeholder='Insira a imagem de capa do artigo...' />
                 </div>
-                <div className={styles.row}>
-                    <div className={`${styles.group}`}>
-                        <label htmlFor="type">Tipo de Artigo:</label>
-                        <select className={styles.type} id="type" name="type" onChange={handleSelectChange}>
-                            <option value="" disabled selected hidden>Selecione o tipo do artigo...</option>
-                            <option value='article'>Artigo</option>
-                            <option value='new'>Notícia</option>
-                            <option value='tutorial'>Tutorial</option>
-                            <option value='project'>Projeto</option>
-                        </select>
-                    </div>
-                    <div className={`${styles.group} ${styles.full_width}`}>
-                        <label htmlFor="type">Categoria de Artigo</label>
-                        <SelectTreeGroup
-                            nodes={refitNodes(categories)}
-                            value={buildValues(article.categoryIds)}
-                            onChange={handleSelectTreeChange}
-                        />
-                    </div>
-                </div>
-                <div className={styles.row}>
-                    <div className={`${styles.group} ${styles.full_width}`}>
-                        <label htmlFor="description">Resumo do Artigo <span>(máx: 200 caracteres)</span></label>
-                        <textarea
-                            className={styles.bigInput}
-                            id="description"
-                            name="description"
-                            placeholder='Digite o resumo do artigo...'
-                            onChange={handleChangeTextArea}
-                        />
-                    </div>
-                </div>
+
                 <div className={styles.row_editor}>
                     <label>Conteúdo do Artigo:</label>
                     <RichTextEditor

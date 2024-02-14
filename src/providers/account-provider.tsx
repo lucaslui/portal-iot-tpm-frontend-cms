@@ -15,7 +15,7 @@ const AccountProvider: React.FC<ProviderProps> = ({ children }: ProviderProps) =
 
   const getCurrentAccount = (): AccountModel => {
     const account = localStorage.getItem('account')
-    return account ? JSON.parse(account) : { accessToken: '' }
+    return account ? JSON.parse(account) : { accessToken: '', userId: '' }
   }
 
   const removeCurrentAccount = (): void => {

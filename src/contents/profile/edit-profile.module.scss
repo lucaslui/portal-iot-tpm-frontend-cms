@@ -1,36 +1,59 @@
 @import '../../styles/colors.scss';
 @import '../../styles/spaces.scss';
 
-.form {
-  display: block;
-  margin-top: $outside-gap;
-
-  .row {
+.edit_profile {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
 
-    button {
-      align-self: flex-end;
-      width: 220px;
+    gap: 16px;
+
+    padding: $inside-gap;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+
+        gap: 16px;
+
+        margin-top: $outside-gap;
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            align-items: stretch;
+
+            gap: 16px;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: stretch;
+            align-items: stretch;
+
+            gap: 16px;
+        }
+
+        .row>.col:first-child {
+            flex: 1;
+        }
+
+        button {
+            width: 220px;
+        }
+
+        .group {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+
+            gap: 16px;
+        }
     }
-  }
-  // .editor {
-  //   .quill {
-  //     margin-top: 10px;
-  //     margin-bottom: 20px;
-
-  //     .ql-toolbar {
-  //       background-color: $background-color;
-  //       .ql-snow {
-  //         .ql-fill {
-  //           color: $primary-color;
-  //         }
-  //       }
-  //     }
-
-  //     .ql-container {
-  //       background-color: $background-color;
-  //     }
-  //   }
-  // }
 }

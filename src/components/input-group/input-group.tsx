@@ -4,15 +4,17 @@ import styles from './input-group.module.scss'
 
 import Input from '../input/input'
 
-type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & { span: string, mr?: boolean }
+type Props =
+    React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+    & { label: string }
 
 const InputGroup: React.FC<Props> = (props: Props) => {
-  return (
-    <div className={`${styles.inputGroup} ${props.mr && 'mr'}`}>
-      <span> {props.span} </span>
-      <Input {...props} />
-    </div>
-  )
+    return (
+        <div className={styles.inputGroup}>
+            <label> {props.label} </label>
+            <Input {...props} />
+        </div>
+    )
 }
 
 export default InputGroup

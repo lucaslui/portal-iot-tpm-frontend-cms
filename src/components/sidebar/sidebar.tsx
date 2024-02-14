@@ -33,7 +33,7 @@ const Sidebar: React.FC<Props> = (props: Props) => {
             </div>
             <hr />
             <nav className={styles.menu}>
-                {props.items.map((item, index) => <SubMenu items={item} key={index} />)}
+                {props.items.map((item: any, index: number) => <SubMenu items={item} key={index} />)}
             </nav>
             <div className={styles.logout} onClick={logout}>
                 <i className="fas fa-sign-out-alt"></i>
@@ -50,13 +50,13 @@ const SubMenu: React.FC<Props> = (props: Props) => {
 
     const showchildren = (): void => setChildren(!children)
 
-    const subItemPath = props.items.children && props.items.children[0].path
+    const subItemPath = props.items.children ? props.items.children[0].path : ''
     
     return (
         <>
             <Link
                 className={styles.item}
-                to={!props.items.children && `${props.items.path}`}
+                to={subItemPath}
                 onClick={props.items.children && showchildren}>
                 <div className={styles.label}>
                     {props.items.icon}
@@ -67,7 +67,7 @@ const SubMenu: React.FC<Props> = (props: Props) => {
                 </div>
             </Link>
             {children &&
-                props.items.children.map((item, index) => {
+                props.items.children.map((item: any, index: number) => {
                     return (
                         <Link className={styles.subitem} to={`${item.path}`} key={index}>
                             <span>{item.name}</span>

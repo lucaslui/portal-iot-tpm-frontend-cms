@@ -51,6 +51,7 @@ const RichTextEditor: React.FC<Props> = (props: Props) => {
             formats={formats}
             value={props.value}
             onChange={props.onChangeValue}
+            placeholder='Digite o conteúdo do artigo...'
         />
     );
 }

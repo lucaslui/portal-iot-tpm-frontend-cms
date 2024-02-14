@@ -42,7 +42,7 @@ const SignInPage: React.FC = () => {
                 }))
                 const account = await signin({ email: state.email, password: state.password })
                 if (account?.accessToken) {
-                    setCurrentAccount && setCurrentAccount({ accessToken: account.accessToken })
+                    setCurrentAccount && setCurrentAccount({ accessToken: account.accessToken, userId: account.userId })
                     navigate('/')
                 }
             }
