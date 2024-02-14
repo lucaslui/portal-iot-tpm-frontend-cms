@@ -3,20 +3,21 @@ import React from 'react'
 import styles from './input-image.module.scss'
 
 type Props = {
-    imageFile: File | null
+    label: string
+    imagePreview: File | string | null
     imageDefault: string
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 } & React.InputHTMLAttributes<HTMLInputElement>
 
 const InputImage: React.FC<Props> = (props: Props) => {
     return (
         <div className={styles.input_image}>
-            <label htmlFor="image">Foto do Perfil:</label>
-            <img src={props.imageFile ? URL.createObjectURL(props.imageFile) : props.imageDefault} alt="Foto do perfil" />
+            <label htmlFor="image">{props.label}</label>
+            <img src={!props.imagePreview ? props.imageDefault : typeof props.imagePreview === 'string' ? props.imagePreview : URL.createObjectURL(props.imagePreview)} />
             <input
-                {...props}
                 id="image"
                 type="file"
+                accept="image/jpg, image/jpeg, image/png"
+                name={props.name}
                 onChange={props.onChange}
             />
         </div>

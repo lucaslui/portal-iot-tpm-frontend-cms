@@ -144,7 +144,7 @@ const AddArticle: React.FC = () => {
                     <div className={styles.col}>
                         <div className={styles.row}>
                             <div className={`${styles.group} ${styles.full_width}`}>
-                                <label htmlFor="title">Título do Artigo <span>(máx: 100 caracteres)</span></label>
+                                <label htmlFor="title">Título do Artigo: <span>(máx: 100 caracteres)</span></label>
                                 <input
                                     type="text"
                                     id="title"
@@ -166,7 +166,7 @@ const AddArticle: React.FC = () => {
                                 </select>
                             </div>
                             <div className={`${styles.group} ${styles.full_width}`}>
-                                <label htmlFor="type">Categoria de Artigo</label>
+                                <label htmlFor="type">Categoria de Artigo:</label>
                                 <SelectTreeGroup
                                     nodes={refitNodes(categories)}
                                     value={buildValues(article.categoryIds)}
@@ -176,7 +176,7 @@ const AddArticle: React.FC = () => {
                         </div>
                         <div className={styles.row}>
                             <div className={`${styles.group} ${styles.full_width}`}>
-                                <label htmlFor="description">Resumo do Artigo <span>(máx: 200 caracteres)</span></label>
+                                <label htmlFor="description">Resumo do Artigo: <span>(máx: 200 caracteres)</span></label>
                                 <textarea
                                     className={styles.bigInput}
                                     id="description"
@@ -189,9 +189,10 @@ const AddArticle: React.FC = () => {
                     </div>
                     <InputImage
                         name='imageBinary'
-                        imageFile={article.imageBinary}
+                        imagePreview={article.imageBinary}
                         imageDefault={NoImage}
                         onChange={handleImageChange}
+                        label='Imagem de Capa do Artigo:'
                         placeholder='Insira a imagem de capa do artigo...' />
                 </div>
 

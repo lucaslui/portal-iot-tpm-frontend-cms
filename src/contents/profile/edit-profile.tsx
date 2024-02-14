@@ -8,6 +8,7 @@ import AccountContext from '../../contexts/account-context'
 import InputImage from '../../components/input-image/input-image'
 
 import DefaultPhoto from '../../assets/imgs/user.svg'
+import { UserProfile } from '../../models/user'
 
 const EditProfile: React.FC = () => {
     const { getCurrentAccount } = useContext(AccountContext)
@@ -18,31 +19,17 @@ const EditProfile: React.FC = () => {
         occupation: '',
         interests: '',
         about: '',
+        imageUrl: '',
         imageBinary: null
     })
 
-    const [error, setError] = useState({
+    const [status, setStatus] = useState({
         isLoading: false,
-        isFormInvalid: false,
-        nameError: '',
-        emailError: '',
-        occupationError: '',
-        interestsError: '',
-        aboutError: '',
-        mainError: ''
+        mainError: '',
+        successMessage: '',
     })
 
-    useEffect(() => validate('name'), [profile.name])
-    useEffect(() => validate('email'), [profile.email])
-
-    const validate = (field: string): void => {
-        const { name, email } = profile
-        const formData = { name, email }
-        setError(error => ({ ...error, [`${field}Error`]: validation(field, formData) }))
-        setError(error => ({ ...error, isFormInvalid: !!error.nameError || !!error.emailError }))
-    }
-
-    const validation = (field: string, formData: any): string => {
+    const checkValidation = (field: string, formData: any): string => {
         const value = formData[field]
         switch (field) {
             case 'name':
@@ -53,6 +40,11 @@ const EditProfile: React.FC = () => {
                 return ''
         }
     }
+
+    const nameFieldError = checkValidation('name', profile)
+    const emailFieldError = checkValidation('email', profile)
+
+    const isFormInvalid = !!nameFieldError || !!emailFieldError
 
     useEffect(() => {
         console.log('profile', profile)
@@ -65,6 +57,10 @@ const EditProfile: React.FC = () => {
                     ...profile,
                     name: userProfile.name,
                     email: userProfile.email,
+                    occupation: userProfile.occupation,
+                    interests: userProfile.interests,
+                    about: userProfile.about,
+                    imageUrl: userProfile.imageUrl,
                 })
             })
             .catch((error) => console.log(error))
@@ -77,38 +73,39 @@ const EditProfile: React.FC = () => {
     }
 
 
-    const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setProfile({
             ...profile,
             [event.target.name]: event.target.value
         })
     }
 
-    const handleChangeTextArea = (event: React.FocusEvent<HTMLTextAreaElement>): void => {
+    const handleChangeTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         setProfile({
             ...profile,
             [event.target.name]: event.target.value
         })
     }
 
-    const handleImageChange = (event: any): void => {
-        console.log('event', event.target.files[0])
-        setProfile({ ...profile, [event.target.name]: event.target.files[0] })
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setProfile({
+            ...profile,
+            [event.target.name]: event.target.files?.[0]
+        })
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
-            if (!error.isLoading && !error.isFormInvalid) {
-                setError(oldProfile => ({ ...oldProfile, isLoading: true }))
+            if (!status.isLoading && !isFormInvalid) {
+                setStatus(error => ({ ...error, isLoading: true }))
                 const session = getCurrentAccount()
                 await updateUserProfile(profile, session)
-                setProfile(oldProfile => ({ ...oldProfile, isLoading: false }))
-                setError(oldError => ({ ...oldError, successMessage: 'Artigo adicionado!' }))
+                setStatus(error => ({ ...error, isLoading: false, successMessage: 'Perfil Salvo!' }))
             }
         } catch (error: any) {
             setProfile({ ...profile })
-            setError({ ...error, isLoading: false, mainError: error.message })
+            setStatus({ ...error, isLoading: false, mainError: error.message })
         }
     }
 
@@ -119,26 +116,70 @@ const EditProfile: React.FC = () => {
                 <div className={styles.row}>
                     <div className={styles.col}>
                         <div className={styles.row}>
-                            <InputGroup onChange={handleChange} value={profile.name} title={error.nameError} type="text" name="name" label="Nome:" placeholder="Digite seu nome" />
-                            <InputGroup onChange={handleChange} value={profile.email} title={error.nameError} type="text" name="nickname" label="Email:" placeholder="Digite seu email" />
+                            <InputGroup
+                                value={profile.name}
+                                onChange={handleChange}
+                                title={nameFieldError}
+                                type="text"
+                                name="name"
+                                label="Nome:"
+                                placeholder="Digite seu nome" />
+                            <InputGroup
+                                value={profile.email}
+                                onChange={handleChange}
+                                title={emailFieldError}
+                                type="text"
+                                name="nickname"
+                                label="Email:"
+                                placeholder="Digite seu email..." />
                         </div>
                         <div className={styles.row}>
-                            <InputGroup onChange={handleChange} title={error.nameError} type="text" name="occupation" label="Profissao:" placeholder="Digite sua profissão" />
+                            <InputGroup
+                                value={profile.occupation}
+                                onChange={handleChange}
+                                type="text"
+                                name="occupation"
+                                label="Profissao:"
+                                placeholder="Digite sua profissao..." />
                         </div>
                         <div className={styles.row}>
-                            <InputGroup onChange={handleChange} title={error.nameError} type="text" name="interests" label="Interesses:" placeholder="Digite áreas e tecnologias em que tem interesse" />
+                            <InputGroup
+                                value={profile.interests}
+                                onChange={handleChange}
+                                type="text"
+                                name="interests"
+                                label="Interesses:"
+                                placeholder="Digite áreas e tecnologias em que tem interesse..." />
                         </div>
                     </div>
                     <div className={styles.col}>
-                        <InputImage imageFile={profile.imageBinary} imageDefault={DefaultPhoto} onChange={handleImageChange} />
+                        <InputImage
+                            label="Foto de Perfil:"
+                            name="imageBinary"
+                            imagePreview={profile.imageUrl}
+                            imageDefault={DefaultPhoto}
+                            onChange={handleImageChange} />
                     </div>
                 </div>
                 <div className={styles.row}>
-                    <TextAreaGroup className={styles.bigInput} onChange={handleChangeTextArea} title={error.aboutError} name="about" span="Sobre mim:" placeholder="Digite um pouco sobre você" />
+                    <TextAreaGroup
+                        value={profile.about}
+                        onChange={handleChangeTextArea}
+                        className={styles.bigInput}
+                        name="about"
+                        span="Sobre mim:"
+                        placeholder="Digite um pouco sobre você..." />
                 </div>
-                <div className={styles.row}>
-                    <FormStatus isLoading={error.isLoading} mainError={error.mainError} />
-                    <CustomButton disabled={error.isFormInvalid} type="submit" value="Editar"> Editar </CustomButton>
+                <div className={`${styles.row} ${styles.flex_end}`}>
+                    <FormStatus
+                        isLoading={status.isLoading}
+                        mainError={status.mainError}
+                        successMessage={status.successMessage} />
+                    <CustomButton
+                        disabled={isFormInvalid}
+                        type="submit">
+                        Salvar
+                    </CustomButton>
                 </div>
             </form>
         </div>

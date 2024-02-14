@@ -35,8 +35,6 @@ const addArticle = async (params: AddArticleParams, accessToken: string): Promis
         data.append('imageBinary', params.imageBinary)
     }
 
-    console.log('data:', data)
-
     const httpResponse = await axios.request({
         url: `${import.meta.env.VITE_API_URL}/api/articles`,
         method: 'POST',

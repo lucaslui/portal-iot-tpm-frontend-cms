@@ -35,10 +35,13 @@ const updateUserProfile = async (params: EditProfileParams, session: AccountMode
 
     data.append('name', params.name)
     data.append('email', params.email)
-    data.append('ocuppation', params.occupation)
+    data.append('occupation', params.occupation)
     data.append('interests', params.interests)
     data.append('about', params.about)
-    data.append('imageBinary', JSON.stringify(params.imageBinary))
+
+    if (params.imageBinary) {
+        data.append('imageBinary', params.imageBinary)
+    }
 
     const httpResponse = await axios.request({
         url: `${import.meta.env.VITE_API_URL}/api/users/profile`,
@@ -48,7 +51,7 @@ const updateUserProfile = async (params: EditProfileParams, session: AccountMode
     })
 
     switch (httpResponse.status) {
-        case 200: return httpResponse.data
+        case 204: return
         case 403: throw new InvalidCredentialsError()
         default: throw new UnexpectedError()
     }

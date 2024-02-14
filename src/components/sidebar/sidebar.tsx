@@ -1,10 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import styles from './sidebar.module.scss'
 
 import DefaultPhoto from '../../assets/imgs/user.svg'
 import AccountContext from '../../contexts/account-context'
+import { loadUserProfile } from '../../services/user-service'
+import { UserProfile } from '../../models/user'
 
 type Props = {
     items?: any
@@ -13,12 +15,36 @@ type Props = {
 }
 
 const Sidebar: React.FC<Props> = (props: Props) => {
-    const { removeCurrentAccount } = useContext(AccountContext)
+    const { getCurrentAccount, removeCurrentAccount } = useContext(AccountContext)
+
+    const [profile, setProfile] = useState({
+        name: '',
+        imageUrl: '',
+    })
+
     const navigate = useNavigate()
 
     const logout = (): void => {
         removeCurrentAccount()
         navigate('/auth/signin')
+    }
+
+    useEffect((): void => {
+        fetchUserProfile()
+            .then((userProfile) => {
+                setProfile({
+                    ...profile,
+                    name: userProfile.name,
+                    imageUrl: userProfile.imageUrl,
+                })
+            })
+            .catch((error) => console.log(error))
+    }, [])
+
+    const fetchUserProfile = async (): Promise<UserProfile> => {
+        const userId = getCurrentAccount()?.userId
+        const userProfile = await loadUserProfile({ userId })
+        return userProfile
     }
 
     return (
@@ -27,8 +53,8 @@ const Sidebar: React.FC<Props> = (props: Props) => {
                 <i className="fas fa-angle-double-left" />
             </button>
             <div className={styles.profile}>
-                <img src={DefaultPhoto} alt="photo" />
-                <span> Nome do Usuário </span>
+                <img src={profile.imageUrl ? profile.imageUrl : DefaultPhoto} alt="photo" />
+                <span> {profile.name} </span>
                 <Link to="/edit-profile" rel="author" className={styles.link}>Editar Perfil</Link>
             </div>
             <hr />
@@ -36,7 +62,7 @@ const Sidebar: React.FC<Props> = (props: Props) => {
                 {props.items.map((item: any, index: number) => <SubMenu items={item} key={index} />)}
             </nav>
             <div className={styles.logout} onClick={logout}>
-                <i className="fas fa-sign-out-alt"></i>
+                <i className="fas fa-sign-out-alt" />
                 <span> Sair da Conta </span>
             </div>
         </div >
@@ -51,7 +77,7 @@ const SubMenu: React.FC<Props> = (props: Props) => {
     const showchildren = (): void => setChildren(!children)
 
     const subItemPath = props.items.children ? props.items.children[0].path : ''
-    
+
     return (
         <>
             <Link
@@ -77,3 +103,7 @@ const SubMenu: React.FC<Props> = (props: Props) => {
         </>
     )
 }
+function getCurrentAccount() {
+    throw new Error('Function not implemented.')
+}
+
