@@ -45,14 +45,17 @@ const RichTextEditor: React.FC<Props> = (props: Props) => {
     ];
 
     return (
-        <ReactQuill
-            theme="snow"
-            modules={modules}
-            formats={formats}
-            value={props.value}
-            onChange={props.onChangeValue}
-            placeholder='Digite o conteúdo do artigo...'
-        />
+        <div className='rich_text_editor'>
+            <ReactQuill
+                theme="snow"
+                modules={modules}
+                formats={formats}
+                value={props.value}
+                onChange={props.onChangeValue}
+                placeholder='Digite o conteúdo do artigo...'
+            />
+        </div>
+
     );
 }
 

@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
 import axios from 'axios'
 
-import styles from './add-article.module.scss'
+import styles from './article-form.module.scss'
 
 import AccountContext from '../../contexts/account-context'
-
 import { PageTitle, CustomButton, FormStatus, SelectTreeGroup } from '../../components'
 import RichTextEditor from '../../components/rich-text-editor/rich-text-editor'
-import { AddArticleParams, addArticle } from '../../services/article-service'
+import { addArticle, updateArticle } from '../../services/article-service'
 import InputImage from '../../components/input-image/input-image'
-
 import NoImage from '../../assets/imgs/no-image.svg'
-import { useParams } from 'react-router-dom'
 
 const AddArticle: React.FC = () => {
     const { getCurrentAccount } = useContext(AccountContext)
@@ -52,7 +51,7 @@ const AddArticle: React.FC = () => {
                     content: data.content,
                     imageUrl: data.imageUrl,
                     imageBinary: null,
-                    categoryIds: data.categoryIds
+                    categoryIds: data.categories?.map((category: any) => category.id)
                 }))
                 .catch((error) => console.log(error))
         }
@@ -126,7 +125,13 @@ const AddArticle: React.FC = () => {
     }
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setArticle({ ...article, [event.target.name]: event.target.files?.[0] })
+        if (event.target.files?.[0]) {
+            setArticle({
+                ...article,
+                imageUrl: URL.createObjectURL(event.target.files?.[0]),
+                [event.target.name]: event.target.files?.[0]
+            })
+        }
     }
 
     const handleChangeTextArea = (event: React.FocusEvent<HTMLTextAreaElement>): void => {
@@ -151,9 +156,14 @@ const AddArticle: React.FC = () => {
             if (!state.isLoading && !state.isFormInvalid) {
                 setState(oldState => ({ ...oldState, isLoading: true }))
                 const token = getCurrentAccount()?.accessToken
-                await addArticle(article, token)
+                if (params.articleId) {
+                    await updateArticle(params.articleId, article, token)
+                    setErrors(oldState => ({ ...oldState, successMessage: 'Artigo atualizado!' }))
+                } else {
+                    await addArticle(article, token)
+                    setErrors(oldState => ({ ...oldState, successMessage: 'Artigo adicionado!' }))
+                }
                 setState(oldState => ({ ...oldState, isLoading: false }))
-                setErrors(oldState => ({ ...oldState, successMessage: 'Artigo adicionado!' }))
             }
         } catch (error: any) {
             setState({ ...state, isLoading: false })
@@ -162,8 +172,8 @@ const AddArticle: React.FC = () => {
     }
 
     return (
-        <div className={styles.add_article}>
-            <PageTitle title='Adicionar Artigo' />
+        <div className={styles.article_form}>
+            <PageTitle title='Adicionar/Editar Artigo' />
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.row}>
                     <div className={styles.col}>
@@ -235,9 +245,9 @@ const AddArticle: React.FC = () => {
                         onChangeValue={handleEditorChange}
                     />
                 </div>
-                <div className={styles.row}>
-                    <CustomButton disabled={false} type="submit"> {params.articleId ? 'Salvar' : 'Adicionar'} </CustomButton>
+                <div className={styles.flex_end}>
                     <FormStatus isLoading={state.isLoading} mainError={errors.mainError} successMessage={errors.successMessage} />
+                    <CustomButton disabled={false} type="submit"> {params.articleId ? 'Salvar' : 'Adicionar'} </CustomButton>
                 </div>
             </form>
         </div>

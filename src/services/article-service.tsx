@@ -49,6 +49,33 @@ const addArticle = async (params: AddArticleParams, accessToken: string): Promis
     }
 }
 
+const updateArticle = async (articleId: string, params: AddArticleParams, accessToken: string, ): Promise<void> => {
+    const data = new FormData()
+
+    data.append('title', params.title)
+    data.append('description', params.description)
+    data.append('content', params.content)
+    data.append('type', params.type)
+    data.append('categoryIds', JSON.stringify(params.categoryIds))
+
+    if (params.imageBinary) {
+        data.append('imageBinary', params.imageBinary)
+    }
+
+    const httpResponse = await axios.request({
+        url: `${import.meta.env.VITE_API_URL}/api/articles/${articleId}`,
+        method: 'PUT',
+        data,
+        headers: { 'x-access-token': accessToken }
+    })
+
+    switch (httpResponse.status) {
+        case 204: return
+        case 403: throw new InvalidCredentialsError()
+        default: throw new UnexpectedError()
+    }
+}
+
 export type PaginatedArticles = {
     articles: ArticleModel[]
     total: number
@@ -68,4 +95,4 @@ const loadArticles = async (params?: LoadArticlesParams): Promise<PaginatedArtic
     }
 }
 
-export { addArticle, loadArticles }
+export { addArticle, updateArticle, loadArticles }

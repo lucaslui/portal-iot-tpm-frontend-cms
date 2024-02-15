@@ -1,11 +1,15 @@
 @import '../../styles/colors.scss';
 
 .custom_button {
-    background-color: #347d39;
     color: $secondary-color;
-    border: none;
+    background-color: $logo-color;
+
     line-height: 40px;
+
+    border: none;
     border-radius: 8px;
+
+    padding: 0 24px;
 
     &:hover {
         opacity: 0.8;

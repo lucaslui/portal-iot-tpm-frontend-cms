@@ -1,7 +1,7 @@
 @import '../../styles/colors.scss';
 @import '../../styles/spaces.scss';
 
-.add_article {
+.article_form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -71,10 +71,19 @@
         .row_editor {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            align-items: stretch;
 
-            gap: 8px;
+            label {
+                margin-bottom: 16px;
+            }
+        }
+
+        .flex_end {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+
+            gap: 16px;
         }
     }
 }

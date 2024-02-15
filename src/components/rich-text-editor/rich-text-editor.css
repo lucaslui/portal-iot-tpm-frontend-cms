@@ -1,3 +1,7 @@
+.rich_text_editor {
+    position: relative;
+}
+
 .quill {
     background-color: #373e48;
     border-color: #2d323b;
@@ -15,12 +19,6 @@
     border-bottom-right-radius: 4px;
 
     font-family: 'Orbitron', sans-serif;
-
-    height: 15vh;
-}
-
-.ql-snow .ql-picker.ql-header {
-    width: 120px;
 }
 
 .ql-editor.ql-blank::before {
