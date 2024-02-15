@@ -4,16 +4,16 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: stretch;
 
     background-color: $background-secondary-color;
-    border-radius: 10px;
+    border-radius: 8px;
 
-    min-width: 340px;
-    min-height: auto;
-    
-    padding: $inside-gap;
+    width: 340px;
+    height: auto;
+
+    padding: 24px 16px;
 
     .toggle {
         align-self: flex-end;
@@ -28,46 +28,6 @@
         i {
             font-size: 1.5rem;
         }
-    }
-
-    .profile {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        padding: 12px;
-
-        margin-top: 12px;
-
-        img {
-            border-radius: 50%;
-            height: 80px;
-            width: 80px;
-            margin-bottom: 20px;
-            background-color: $disabled-color;
-        }
-
-        span {
-            margin-bottom: 8px;
-            font-size: 1rem;
-        }
-
-        a {
-            color: $secondary-color;
-            text-decoration: none;
-        }
-    }
-
-    hr {
-        margin: 20px;
-        width: 100%;
-        border: 0;
-        height: 1px;
-        background-image: linear-gradient(to right,
-                rgba(120, 120, 120, 0),
-                rgba(120, 120, 120, 0.75),
-                rgba(120, 120, 120, 0));
     }
 
     .menu {

@@ -10,47 +10,12 @@ const PanelLayout: React.FC = () => {
 
     const toggleSidebar = (): void => setSidebarOpened(!sidebarOpened)
 
-    const navbarItems = [
-        {
-            name: 'Dashboard',
-            path: 'dashboard',
-            icon: <i className="fas fa-user" />
-        },
-        {
-            name: 'Controle de Artigos',
-            path: 'article-management',
-            icon: <i className="fas fa-sticky-note" />,
-            children: [
-                { name: 'Adicionar', path: 'add-article' },
-                { name: 'Editar', path: 'edit-article' },
-                { name: 'Listar', path: 'load-articles' },
-                { name: 'Deletar', path: 'delete-article' }
-            ]
-        },
-        {
-            name: 'Controle de Categorias',
-            path: 'category-management',
-            icon: <i className="fas fa-stream" />,
-            children: [
-                { name: 'Adicionar', path: 'add-category' },
-                { name: 'Editar', path: 'edit-category' },
-                { name: 'Listar', path: 'load-categories' },
-                { name: 'Deletar', path: 'delete-category' }
-            ]
-        },
-        {
-            name: 'Configuração de Conta',
-            path: 'account-settings',
-            icon: <i className="fas fa-cog" />
-        }
-    ]
-
     return (
         <div className={styles.panel}>
             <ParticlesBackground />
             <Header />
             <div className={styles.content}>
-                <Sidebar items={navbarItems} toggleSidebar={toggleSidebar} sidebarOpened={sidebarOpened} />
+                <Sidebar toggleSidebar={toggleSidebar} sidebarOpened={sidebarOpened} />
                 <main>
                     <Outlet />
                 </main>

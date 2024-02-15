@@ -11,9 +11,12 @@ import { AddArticleParams, addArticle } from '../../services/article-service'
 import InputImage from '../../components/input-image/input-image'
 
 import NoImage from '../../assets/imgs/no-image.svg'
+import { useParams } from 'react-router-dom'
 
 const AddArticle: React.FC = () => {
     const { getCurrentAccount } = useContext(AccountContext)
+
+    const params = useParams();
 
     const [state, setState] = useState({
         isLoading: false,
@@ -29,14 +32,36 @@ const AddArticle: React.FC = () => {
         successMessage: ''
     })
 
-    const [article, setArticle] = useState<AddArticleParams>({
+    const [article, setArticle] = useState({
         title: '',
         description: '',
         content: '',
+        imageUrl: '',
         imageBinary: null,
         type: '',
         categoryIds: [] as string[]
     })
+
+    useEffect(() => {
+        if (params.articleId) {
+            fetchArticleById()
+                .then((data) => setArticle({
+                    title: data.title,
+                    description: data.description,
+                    type: data.type,
+                    content: data.content,
+                    imageUrl: data.imageUrl,
+                    imageBinary: null,
+                    categoryIds: data.categoryIds
+                }))
+                .catch((error) => console.log(error))
+        }
+    }, [params.articleId])
+
+    const fetchArticleById = async (): Promise<any> => {
+        const result = await axios(`${import.meta.env.VITE_API_URL}/api/articles/${params.articleId}`)
+        return result.data
+    }
 
     useEffect(() => {
         console.log('article:', article)
@@ -52,12 +77,12 @@ const AddArticle: React.FC = () => {
     }])
 
     useEffect((): void => {
-        fetchData()
+        fetchCategories()
             .then((data) => setCategories(data))
             .catch((error) => console.log(error))
     }, [])
 
-    const fetchData = async (): Promise<any> => {
+    const fetchCategories = async (): Promise<any> => {
         const result = await axios(`${import.meta.env.VITE_API_URL}/api/categories/tree`)
         return result.data
     }
@@ -92,7 +117,7 @@ const AddArticle: React.FC = () => {
 
     const buildValues = (categoryIds: string[]): any => {
         const values = {} as { [categoryId: string]: boolean }
-        categoryIds.forEach(id => { values[id] = true })
+        categoryIds?.forEach(id => { values[id] = true })
         return values
     }
 
@@ -150,6 +175,7 @@ const AddArticle: React.FC = () => {
                                     id="title"
                                     name="title"
                                     placeholder='Digite o título do artigo...'
+                                    value={article.title}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -157,7 +183,12 @@ const AddArticle: React.FC = () => {
                         <div className={styles.row}>
                             <div className={`${styles.group}`}>
                                 <label htmlFor="type">Tipo de Artigo:</label>
-                                <select className={styles.type} id="type" name="type" onChange={handleSelectChange}>
+                                <select
+                                    className={styles.type}
+                                    id="type"
+                                    name="type"
+                                    value={article.type}
+                                    onChange={handleSelectChange}>
                                     <option value="" disabled selected hidden>Selecione o tipo do artigo...</option>
                                     <option value='concepts'>Artigo</option>
                                     <option value='news'>Notícia</option>
@@ -182,6 +213,7 @@ const AddArticle: React.FC = () => {
                                     id="description"
                                     name="description"
                                     placeholder='Digite o resumo do artigo...'
+                                    value={article.description}
                                     onChange={handleChangeTextArea}
                                 />
                             </div>
@@ -189,7 +221,7 @@ const AddArticle: React.FC = () => {
                     </div>
                     <InputImage
                         name='imageBinary'
-                        imagePreview={article.imageBinary}
+                        imagePreview={article.imageUrl}
                         imageDefault={NoImage}
                         onChange={handleImageChange}
                         label='Imagem de Capa do Artigo:'
@@ -204,7 +236,7 @@ const AddArticle: React.FC = () => {
                     />
                 </div>
                 <div className={styles.row}>
-                    <CustomButton disabled={false} type="submit"> Adicionar </CustomButton>
+                    <CustomButton disabled={false} type="submit"> {params.articleId ? 'Salvar' : 'Adicionar'} </CustomButton>
                     <FormStatus isLoading={state.isLoading} mainError={errors.mainError} successMessage={errors.successMessage} />
                 </div>
             </form>

@@ -49,7 +49,12 @@ const addArticle = async (params: AddArticleParams, accessToken: string): Promis
     }
 }
 
-const loadArticles = async (params?: LoadArticlesParams): Promise<ArticleModel[]> => {
+export type PaginatedArticles = {
+    articles: ArticleModel[]
+    total: number
+}
+
+const loadArticles = async (params?: LoadArticlesParams): Promise<PaginatedArticles> => {
     const httpResponse = await axios.request({
         url: `${import.meta.env.VITE_API_URL}/api/articles`,
         method: 'get',
