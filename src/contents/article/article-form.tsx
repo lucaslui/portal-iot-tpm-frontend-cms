@@ -154,6 +154,7 @@ const AddArticle: React.FC = () => {
         event.preventDefault()
         try {
             if (!state.isLoading && !state.isFormInvalid) {
+                setErrors(oldState => ({ ...oldState, mainError: '', successMessage: '' }))
                 setState(oldState => ({ ...oldState, isLoading: true }))
                 const token = getCurrentAccount()?.accessToken
                 if (params.articleId) {
