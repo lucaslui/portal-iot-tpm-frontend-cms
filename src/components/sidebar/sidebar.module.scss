@@ -13,7 +13,7 @@
     width: 340px;
     height: auto;
 
-    padding: 24px 16px;
+    padding: 16px 16px;
 
     .toggle {
         align-self: flex-end;
@@ -33,6 +33,8 @@
     .menu {
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
 
         width: 100%;
 
@@ -47,11 +49,6 @@
             text-decoration: none;
             font-size: 1rem;
 
-            &.selected {
-                background: $background-color;
-                border-left: 4px solid $secondary-color;
-            }
-
             &:hover {
                 background: $background-color;
                 border-left: 4px solid $secondary-color;
@@ -60,11 +57,18 @@
             .label {
                 display: flex;
                 flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
 
                 i {
                     margin-right: 10px;
                 }
             }
+        }
+
+        .active {
+            background: $background-color;
+            border-left: 4px solid $secondary-color;
         }
 
         .subitem {
@@ -79,23 +83,6 @@
             &:hover {
                 background: $background-color;
             }
-        }
-    }
-
-    .logout {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        color: $secondary-color;
-        margin: $outside-gap;
-        padding: $inside-gap;
-        text-decoration: none;
-        cursor: pointer;
-
-        i {
-            margin-bottom: 10px;
-            font-size: 1.5rem;
         }
     }
 }

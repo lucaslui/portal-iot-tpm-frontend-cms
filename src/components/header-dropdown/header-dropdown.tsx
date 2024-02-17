@@ -11,12 +11,12 @@ import { UserProfile } from '../../models/user'
 const dropdownItems = [
     {
         name: 'Profile',
-        path: 'profile',
+        path: 'settings/profile',
         icon: <i className="fas fa-user" />
     },
     {
-        name: 'Settings',
-        path: 'settings',
+        name: 'Password',
+        path: 'settings/password',
         icon: <i className="fas fa-sticky-note" />
     },
 ]

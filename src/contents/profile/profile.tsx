@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import styles from './edit-profile.module.scss'
+import styles from './profile.module.scss'
 
 import { PageTitle, InputGroup, TextAreaGroup, FormStatus, CustomButton } from '../../components'
 import { loadUserProfile, updateUserProfile } from '../../services/user-service'
 import AccountContext from '../../contexts/account-context'
 import InputImage from '../../components/input-image/input-image'
-
 import DefaultPhoto from '../../assets/imgs/user.svg'
 import { UserProfile } from '../../models/user'
 
-const EditProfile: React.FC = () => {
+const Profile: React.FC = () => {
     const { getCurrentAccount } = useContext(AccountContext)
 
     const [profile, setProfile] = useState({
@@ -110,7 +109,7 @@ const EditProfile: React.FC = () => {
     }
 
     return (
-        <div className={styles.edit_profile}>
+        <div className={styles.profile}>
             <PageTitle title='Editar Perfil' />
             <form onSubmit={handleSubmit}>
                 <div className={styles.row}>
@@ -186,4 +185,4 @@ const EditProfile: React.FC = () => {
     )
 }
 
-export default EditProfile
+export default Profile

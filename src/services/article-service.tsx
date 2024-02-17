@@ -6,7 +6,7 @@ import { ArticleModel } from '../models/article'
 
 export type LoadArticlesParams = {
     page?: number
-    articleId?: string
+    limit?: number
     userId?: string
     categoryId?: string
     month?: number
@@ -49,7 +49,7 @@ const addArticle = async (params: AddArticleParams, accessToken: string): Promis
     }
 }
 
-const updateArticle = async (articleId: string, params: AddArticleParams, accessToken: string, ): Promise<void> => {
+const updateArticle = async (articleId: string, params: AddArticleParams, accessToken: string,): Promise<void> => {
     const data = new FormData()
 
     data.append('title', params.title)
@@ -76,16 +76,20 @@ const updateArticle = async (articleId: string, params: AddArticleParams, access
     }
 }
 
-export type PaginatedArticles = {
+export type ArticlesPaginatedModel = {
     articles: ArticleModel[]
-    total: number
+    count: number
+    page: number
+    totalPages: number
+    totalItems: number
 }
 
-const loadArticles = async (params?: LoadArticlesParams): Promise<PaginatedArticles> => {
+const loadArticles = async (params?: LoadArticlesParams): Promise<ArticlesPaginatedModel> => {
+    // pass as query parameters in request
     const httpResponse = await axios.request({
         url: `${import.meta.env.VITE_API_URL}/api/articles`,
         method: 'get',
-        data: params
+        params
     })
 
     switch (httpResponse.status) {

@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import styles from './articles-table.module.scss'
 
-import { loadArticles } from '../../services/article-service'
+import { ArticlesPaginatedModel, loadArticles } from '../../services/article-service'
 import { ArticleModel } from '../../models/article'
+import { getDateFormat } from '../../utils/date'
 
 const ArticlesTable: React.FC = () => {
-    const [articles, setArticles] = useState<ArticleModel[]>([])
+    const [state, setStates] = useState<ArticlesPaginatedModel>()
+    const [page, setPage] = useState(1)
+
+    const navigate = useNavigate();
 
     useEffect((): void => {
         fetchData()
-            .then((articles) => setArticles(articles))
+            .then((data) => setStates(data))
             .catch((error) => console.log(error))
-    }, [])
+    }, [page])
 
-    const fetchData = async (): Promise<ArticleModel[]> => {
-        const data = await loadArticles()
-        return data.articles
+    const fetchData = async (): Promise<ArticlesPaginatedModel> => {
+        const data = await loadArticles({ page, limit: 8 })
+        return data
+    }
+
+    const handleRowOnClick = (articleId: string | undefined) => {
+        if (articleId) {
+            navigate(`/articles/form/${articleId}`);
+        }
     }
 
     return (
@@ -32,34 +42,36 @@ const ArticlesTable: React.FC = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Capa</th>
                         <th>Título</th>
                         <th>Descrição</th>
+                        <th>Tipo</th>
+                        <th>Status</th>
+                        <th>Atualizado em</th>
                         <th>Criado em</th>
-                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {articles?.map((article: ArticleModel) => (
-                        <tr key={article.id}>
-                            <td>{article.id}</td>
+                    {state?.articles.map((article: ArticleModel) => (
+                        <tr key={article.id} onClick={() => handleRowOnClick(article.id)}>
+                            <td><img src={article.imageUrl} alt="imagem de capa"></img></td>
                             <td>{article.title}</td>
                             <td>{article.description}</td>
-                            <td>{article.createdAt}</td>
-                            <td className={styles.actions}>
-                                <Link to={`/articles/form/${article.id}`}> <i className="fas fa-edit" /> </Link>
-                                <button><i className="fas fa-trash" /></button>
-                            </td>
+                            <td>{article.type}</td>
+                            <td>{'Rascunho'}</td>
+                            <td>{getDateFormat(article.updatedAt)}</td>
+                            <td>{getDateFormat(article.createdAt)}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
             <footer>
-                <button><i className="fas fa-chevron-left" /></button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button><i className="fas fa-chevron-right" /></button>
+                <span>Mostrando {state?.articles.length} de {state?.totalItems} resultados</span>
+                <div>
+                    <button onClick={() => setPage(page - 1)} disabled={page === 1}><i className="fas fa-chevron-left" /></button>
+                    <span>{page} de {state?.totalPages}</span>
+                    <button onClick={() => setPage(page + 1)} disabled={page === state?.totalPages}><i className="fas fa-chevron-right" /></button>
+                </div>
             </footer>
         </div>
     )

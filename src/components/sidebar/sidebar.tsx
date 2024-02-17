@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import styles from './sidebar.module.scss'
 
@@ -14,27 +14,25 @@ const navbarItems = [
     {
         name: 'Dashboard',
         path: 'dashboard',
-        icon: <i className="fas fa-user" />
+        icon: <i className="fas fa-tachometer-alt" />
     },
     {
-        name: 'Controle de Artigos',
+        name: 'Lista de Artigos',
         path: 'articles',
-        icon: <i className="fas fa-sticky-note" />
+        icon: <i className="fas fa-newspaper" />
     },
     {
-        name: 'Controle de Categorias',
+        name: 'Lista de Categorias',
         path: 'categories',
-        icon: <i className="fas fa-stream" />,
+        icon: <i className="fas fa-list" />
     },
     {
-        name: 'Configuração de Conta',
+        name: 'Configuração',
         path: 'settings',
-        icon: <i className="fas fa-cog" />,
+        icon: <i className="fas fa-cogs" />,
         children: [
-            { name: 'Adicionar', path: 'add-article' },
-            { name: 'Editar', path: 'edit-article' },
-            { name: 'Listar', path: 'load-articles' },
-            { name: 'Deletar', path: 'delete-article' }
+            { name: 'Profile', path: 'profile' },
+            { name: 'Password', path: 'password' },
         ]
     }
 ]
@@ -71,27 +69,39 @@ const SubMenu: React.FC<SubMenuProps> = (props: SubMenuProps) => {
 
     return (
         <>
-            <Link
-                className={styles.item}
-                to={props.item.path}
-                onClick={props.item.children && showchildren}>
-                <div className={styles.label}>
-                    {props.item.icon}
-                    <span>{props.item.name}</span>
+
+            {props.item.children
+                ? <div className={styles.item} onClick={showchildren}>
+                    <div className={styles.label}>
+                        {props.item.icon}
+                        <span>{props.item.name}</span>
+                    </div>
+                    <div>
+                        {children ? <i className="fas fa-sort-up" /> : <i className="fas fa-sort-down" />}
+                    </div>
                 </div>
-                <div>
-                    {props.item.children && children
-                        ? <i className="fas fa-sort-up" />
-                        : props.item.children ? <i className="fas fa-sort-down" /> : null}
-                </div>
-            </Link>
+                : <NavLink
+                    className={({ isActive }) => isActive ? `${styles.item} ${styles.active}` : styles.item}
+                    to={props.item.path}
+                    onClick={props.item.children && showchildren}>
+                    <div className={styles.label}>
+                        {props.item.icon}
+                        <span>{props.item.name}</span>
+                    </div>
+                    <div>
+                        {props.item.children && children
+                            ? <i className="fas fa-sort-up" />
+                            : props.item.children ? <i className="fas fa-sort-down" /> : null}
+                    </div>
+                </NavLink>
+            }
             {
                 children &&
                 props.item.children?.map((item: any, index: number) => {
                     return (
-                        <Link className={styles.subitem} to={`${item.path}`} key={index}>
+                        <NavLink className={styles.subitem} to={`${props.item.path}/${item.path}`} key={index}>
                             <span>{item.name}</span>
-                        </Link>
+                        </NavLink>
                     )
                 })
             }

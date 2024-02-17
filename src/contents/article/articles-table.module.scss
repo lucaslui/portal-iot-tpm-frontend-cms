@@ -7,7 +7,7 @@
     justify-content: flex-start;
     align-items: stretch;
 
-    gap: 16px;
+    gap: 8px;
 
     padding: 16px 24px;
 
@@ -113,6 +113,11 @@
 
             td {
                 border-top: 4px solid $background-secondary-color;
+
+                img {
+                    width: 32px;
+                    height: 32px;
+                }
             }
 
             .actions {
@@ -136,20 +141,41 @@
     footer {
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
 
-        button {
-            padding: 8px;
-
+        span {
             color: $primary-color;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
 
-            background: transparent;
+        div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
 
-            cursor: pointer;
+            gap: 8px;
 
-            &:hover {
-                color: $logo-color;
+            button {
+                padding: 8px;
+
+                color: $primary-color;
+                background-color: $background-color;
+
+                cursor: pointer;
+
+                border-radius: 4px;
+
+                &:hover {
+                    color: $logo-color;
+                }
+
+                &:disabled {
+                    color: $disabled-color;
+                    cursor: not-allowed;
+                }
             }
         }
     }
