@@ -16,10 +16,6 @@ const ParticlesBackground: React.FC = () => {
         await loadSlim(engine);
     }, []);
 
-    const particlesLoaded = useCallback(async (container: any) => {
-        console.log(container);
-    }, [])
-
     const particlesConfig: RecursivePartial<IOptions> = {
         "fullScreen": {
             "enable": true,
@@ -99,7 +95,6 @@ const ParticlesBackground: React.FC = () => {
     return (
         <Particles
             init={particlesInit}
-            loaded={particlesLoaded}
             options={particlesConfig}
         />
     );

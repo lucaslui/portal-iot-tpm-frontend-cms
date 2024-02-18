@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { PrimeReactProvider } from 'primereact/api';
 
 import AccountProvider from './providers/account-provider'
 
@@ -14,8 +15,7 @@ import AddArticle from './contents/article/article-form'
 import AccountSettings from './contents/account/settings'
 import Profile from './contents/profile/profile'
 import ArticlesTable from './contents/article/articles-table'
-
-import { PrimeReactProvider } from 'primereact/api';
+import CategoriesTable from './contents/category/category-table'
 
 const App: React.FC = () => {
     return (
@@ -30,7 +30,7 @@ const App: React.FC = () => {
                                 <Route path='articles' element={<ArticlesTable />} />
                                 <Route path='articles/form' element={<AddArticle />} />
                                 <Route path='articles/form/:articleId' element={<AddArticle />} />
-                                <Route path='categories' element={<ArticlesTable />} />
+                                <Route path='categories' element={<CategoriesTable />} />
                                 <Route path='settings/profile' element={<Profile />} />
                                 <Route path='settings/password' element={<AccountSettings />} />
                             </Route>

@@ -1,0 +1,72 @@
+@import '../../styles/colors.scss';
+
+.filter_category {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 16px 24px;
+
+    font-size: 0.8rem;
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+
+        width: 100%;
+        gap: 20px;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        gap: 12px;
+    }
+
+    .node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        width: 200px;
+        height: 60px;
+
+        border-radius: 10px;
+        background-color: $background-button-color;
+
+        &.active {
+            background-color: $background-color;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: $background-color;
+        }
+    }
+
+    .more {
+        text-decoration: underline;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $background-secondary-color;
+        }
+    }
+
+    .arrow_down {
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 12px solid #ccc;
+    }
+}
