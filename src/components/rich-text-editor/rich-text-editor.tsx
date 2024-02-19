@@ -15,33 +15,28 @@ const RichTextEditor: React.FC<Props> = (props: Props) => {
     const modules = {
         toolbar: [
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            [{ size: [] }],
+            [{ 'size': [] }],
             // [{ font: [] }],
-            ["bold", "italic", "underline", "strike", "blockquote"],
-            [{ align: ["right", "center", "justify"] }],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "image"],
-            [{ color: ["red", "#785412"] }],
-            [{ background: ["red", "#785412"] }]
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'script': 'sub' }, { 'script': 'super' }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'align': [] }, { 'indent': '-1' }, { 'indent': '+1' }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['link', 'image', 'video', 'code-block'],
+            ['clean']
         ]
     };
 
     const formats = [
         "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "blockquote",
-        "list",
-        "bullet",
-        "link",
-        "color",
-        "image",
-        "background",
-        "align",
         "size",
-        "font"
+        // "font",
+        "bold", "italic", "underline", "strike", "blockquote",
+        "script",
+        "color", "background",
+        "align", 'indent',
+        "list", "bullet",
+        "link", "image", "video", "code-block",
     ];
 
     return (

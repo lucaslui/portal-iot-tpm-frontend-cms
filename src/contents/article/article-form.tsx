@@ -62,9 +62,9 @@ const AddArticle: React.FC = () => {
         return result.data
     }
 
-    useEffect(() => {
-        console.log('article:', article)
-    }, [article])
+    // useEffect(() => {
+    //     console.log('article:', article)
+    // }, [article])
 
     const [categories, setCategories] = useState([{
         id: '',
