@@ -6,6 +6,7 @@ import styles from './articles-table.module.scss'
 import { ArticlesPaginatedModel, loadArticles } from '../../services/article-service'
 import { ArticleModel } from '../../models/article'
 import { getDateFormat } from '../../utils/date'
+import { Input } from '../../components'
 
 const ArticlesTable: React.FC = () => {
     const [state, setStates] = useState<ArticlesPaginatedModel>()
@@ -34,7 +35,7 @@ const ArticlesTable: React.FC = () => {
         <div className={styles.articles_table}>
             <header>
                 <div className={styles.search}>
-                    <input type="text" placeholder="Pesquisar" />
+                    <Input type="text" placeholder="Pesquisar" />
                     <button><i className="fas fa-search" /></button>
                 </div>
                 <Link to={"/articles/form"}> Adicionar </Link>

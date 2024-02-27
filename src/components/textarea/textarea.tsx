@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './text-area.module.scss'
+import styles from './textarea.module.scss'
 
 type Props = React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>
 
@@ -18,11 +18,13 @@ const TextArea: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div className={styles.textareaWrap}>
+    <div className={styles.textarea_wrapper}>
       <textarea
         {...props}
+        rows={2}
+        cols={1}
         readOnly onFocus={enableInput}
-        // data-status={props.title ? 'invalid' : 'valid'}
+        data-status={props.title ? 'invalid' : 'valid'}
         />
       <span
         title={getTitle()}

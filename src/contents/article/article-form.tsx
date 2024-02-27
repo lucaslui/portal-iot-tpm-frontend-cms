@@ -6,11 +6,12 @@ import axios from 'axios'
 import styles from './article-form.module.scss'
 
 import AccountContext from '../../contexts/account-context'
-import { PageTitle, CustomButton, FormStatus, SelectTreeGroup } from '../../components'
+import { PageTitle, CustomButton, FormStatus, SelectTreeGroup, TextArea, Input } from '../../components'
 import RichTextEditor from '../../components/rich-text-editor/rich-text-editor'
 import { addArticle, updateArticle } from '../../services/article-service'
 import InputImage from '../../components/input-image/input-image'
 import NoImage from '../../assets/imgs/no-image.svg'
+import Select from '../../components/select/select'
 
 const AddArticle: React.FC = () => {
     const { getCurrentAccount } = useContext(AccountContext)
@@ -84,6 +85,32 @@ const AddArticle: React.FC = () => {
             .then((data) => setCategories(data))
             .catch((error) => console.log(error))
     }, [])
+
+    const checkValidation = (field: string, formData: any): string => {
+        const value = formData[field]
+        switch (field) {
+            case 'title':
+                return value ? '' : 'Campo obrigatório'
+            case 'description':
+                return value ? '' : 'Campo obrigatório'
+            case 'type':
+                return value ? '' : 'Campo obrigatório'
+            case 'state':
+                return value ? '' : 'Campo obrigatório'
+            case 'readTime':
+                return value ? '' : 'Campo obrigatório'
+            default:
+                return ''
+        }
+    }
+
+    const titleFieldError = checkValidation('title', article)
+    const descriptionFieldError = checkValidation('description', article)
+    const typeFieldError = checkValidation('type', article)
+    const stateFieldError = checkValidation('state', article)
+    const readTimeFieldError = checkValidation('readTime', article)
+
+    const isFormInvalid = !!titleFieldError || !!descriptionFieldError || !!typeFieldError || !!stateFieldError || !!readTimeFieldError
 
     const fetchCategories = async (): Promise<any> => {
         const result = await axios(`${import.meta.env.VITE_API_URL}/api/categories/tree`)
@@ -185,11 +212,12 @@ const AddArticle: React.FC = () => {
                         <div className={`${styles.row}`}>
                             <div className={`${styles.group} ${styles.full}`}>
                                 <label htmlFor="title">Título: <span>(máx: 100 caracteres)</span></label>
-                                <input
+                                <Input
                                     type="text"
                                     id="title"
                                     name="title"
                                     placeholder='Digite o título do artigo...'
+                                    title={titleFieldError}
                                     value={article.title}
                                     onChange={handleChange}
                                 />
@@ -198,10 +226,11 @@ const AddArticle: React.FC = () => {
                         <div className={`${styles.row}`}>
                             <div className={`${styles.group}`}>
                                 <label htmlFor="type">Tipo de conteúdo:</label>
-                                <select
+                                <Select
                                     className={styles.type}
                                     id="type"
                                     name="type"
+                                    title={typeFieldError}
                                     value={article.type}
                                     onChange={handleSelectChange}>
                                     <option value="" disabled selected hidden>Selecione o tipo do artigo...</option>
@@ -209,29 +238,31 @@ const AddArticle: React.FC = () => {
                                     <option value='news'>Notícia</option>
                                     <option value='tutorials'>Tutorial</option>
                                     <option value='projects'>Projeto</option>
-                                </select>
+                                </Select>
                             </div>
                             <div className={`${styles.group}`}>
                                 <label htmlFor="state">Estado de publicação:</label>
-                                <select
+                                <Select
                                     className={styles.type}
                                     id="state"
                                     name="state"
+                                    title={stateFieldError}
                                     value={article.state}
                                     onChange={handleSelectChange}>
                                     <option value="" disabled selected hidden>Selecione o estado do artigo...</option>
                                     <option value='draft'>Rascunho</option>
                                     <option value='published'>Publicado</option>
                                     <option value='deleted'>Excluído</option>
-                                </select>
+                                </Select>
                             </div>
                             <div className={`${styles.group}`}>
                                 <label htmlFor="readTime">Tempo de leitura: <span>(em minutos)</span></label>
-                                <input
+                                <Input
                                     type="number"
                                     id="readTime"
                                     name="readTime"
                                     placeholder='Digite o tempo de leitura...'
+                                    title={readTimeFieldError}
                                     value={article.readTime}
                                     onChange={handleChange}
                                 />
@@ -259,11 +290,11 @@ const AddArticle: React.FC = () => {
                 <div className={styles.row}>
                     <div className={`${styles.group} ${styles.full_width}`}>
                         <label htmlFor="description">Descrição: <span>(máx: 200 caracteres)</span></label>
-                        <textarea
-                            className={styles.bigInput}
+                        <TextArea
                             id="description"
                             name="description"
                             placeholder='Digite o resumo do artigo...'
+                            title={descriptionFieldError}
                             value={article.description}
                             onChange={handleChangeTextArea}
                         />
@@ -278,7 +309,7 @@ const AddArticle: React.FC = () => {
                 </div>
                 <div className={styles.flex_end}>
                     <FormStatus isLoading={state.isLoading} mainError={errors.mainError} successMessage={errors.successMessage} />
-                    <CustomButton disabled={false} type="submit"> {params.articleId ? 'Salvar' : 'Adicionar'} </CustomButton>
+                    <CustomButton disabled={isFormInvalid} type="submit"> {params.articleId ? 'Salvar' : 'Adicionar'} </CustomButton>
                 </div>
             </form>
         </div>

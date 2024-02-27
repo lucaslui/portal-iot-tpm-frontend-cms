@@ -18,11 +18,12 @@ const Input: React.FC<Props> = (props: Props) => {
     }
 
     return (
-        <div className={styles.inputWrap}>
+        <div className={styles.input_wrapper}>
             <input
                 {...props}
                 readOnly 
                 onFocus={enableInput}
+                data-status={props.title ? 'invalid' : 'valid'}
             />
             <span
                 title={getTitle()}

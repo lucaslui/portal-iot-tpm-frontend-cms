@@ -45,10 +45,6 @@ const Profile: React.FC = () => {
 
     const isFormInvalid = !!nameFieldError || !!emailFieldError
 
-    useEffect(() => {
-        console.log('profile', profile)
-    }, [profile])
-
     useEffect((): void => {
         fetchUserProfile()
             .then((userProfile) => {
