@@ -24,10 +24,6 @@ const AddArticle: React.FC = () => {
     })
 
     const [errors, setErrors] = useState({
-        titleError: '',
-        descriptionError: '',
-        contentError: '',
-        imageUrlError: '',
         mainError: '',
         successMessage: ''
     })
@@ -151,7 +147,7 @@ const AddArticle: React.FC = () => {
         return values
     }
 
-    const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
         setArticle({ ...article, [event.target.name]: event.target.value })
     }
 
@@ -163,14 +159,6 @@ const AddArticle: React.FC = () => {
                 [event.target.name]: event.target.files?.[0]
             })
         }
-    }
-
-    const handleChangeTextArea = (event: React.FocusEvent<HTMLTextAreaElement>): void => {
-        setArticle({ ...article, [event.target.name]: event.target.value })
-    }
-
-    const handleSelectChange = (event: any): void => {
-        setArticle(oldState => ({ ...oldState, [event.target.name]: event.target.value }))
     }
 
     const handleSelectTreeChange = (event: any): void => {
@@ -232,7 +220,7 @@ const AddArticle: React.FC = () => {
                                     name="type"
                                     title={typeFieldError}
                                     value={article.type}
-                                    onChange={handleSelectChange}>
+                                    onChange={handleChange}>
                                     <option value="" disabled selected hidden>Selecione o tipo do artigo...</option>
                                     <option value='concepts'>Artigo</option>
                                     <option value='news'>Notícia</option>
@@ -248,7 +236,7 @@ const AddArticle: React.FC = () => {
                                     name="state"
                                     title={stateFieldError}
                                     value={article.state}
-                                    onChange={handleSelectChange}>
+                                    onChange={handleChange}>
                                     <option value="" disabled selected hidden>Selecione o estado do artigo...</option>
                                     <option value='draft'>Rascunho</option>
                                     <option value='published'>Publicado</option>
@@ -296,7 +284,7 @@ const AddArticle: React.FC = () => {
                             placeholder='Digite o resumo do artigo...'
                             title={descriptionFieldError}
                             value={article.description}
-                            onChange={handleChangeTextArea}
+                            onChange={handleChange}
                         />
                     </div>
                 </div>
