@@ -16,9 +16,11 @@ export type LoadArticlesParams = {
 export type AddArticleParams = {
     title: string
     description: string
+    type: string
+    state: string
+    readTime: number
     content: string
     imageBinary: File | null
-    type: string
     categoryIds: string[]
 }
 
@@ -29,6 +31,8 @@ const addArticle = async (params: AddArticleParams, accessToken: string): Promis
     data.append('description', params.description)
     data.append('content', params.content)
     data.append('type', params.type)
+    data.append('state', params.state)
+    data.append('readTime', params.readTime.toString())
     data.append('categoryIds', JSON.stringify(params.categoryIds))
 
     if (params.imageBinary) {
@@ -56,6 +60,8 @@ const updateArticle = async (articleId: string, params: AddArticleParams, access
     data.append('description', params.description)
     data.append('content', params.content)
     data.append('type', params.type)
+    data.append('state', params.state)
+    data.append('readTime', params.readTime.toString())
     data.append('categoryIds', JSON.stringify(params.categoryIds))
 
     if (params.imageBinary) {

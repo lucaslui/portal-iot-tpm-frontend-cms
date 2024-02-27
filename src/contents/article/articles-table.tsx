@@ -42,11 +42,10 @@ const ArticlesTable: React.FC = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Capa</th>
-                        <th>Título</th>
-                        <th>Descrição</th>
+                        <th>Artigo</th>
                         <th>Tipo</th>
-                        <th>Status</th>
+                        <th>Estado</th>
+                        <th>Temp. Leitura</th>
                         <th>Atualizado em</th>
                         <th>Criado em</th>
                     </tr>
@@ -54,11 +53,18 @@ const ArticlesTable: React.FC = () => {
                 <tbody>
                     {state?.articles.map((article: ArticleModel) => (
                         <tr key={article.id} onClick={() => handleRowOnClick(article.id)}>
-                            <td><img src={article.imageUrl} alt="imagem de capa"></img></td>
-                            <td>{article.title}</td>
-                            <td>{article.description}</td>
+                            <td>
+                                <div className={styles.title}>
+                                    <img src={article.imageUrl} alt="imagem de capa"></img>
+                                    <div className={styles.texts}>
+                                        <span>{article.title}</span>
+                                        <p>{article.description}</p>
+                                    </div>
+                                </div>
+                            </td>
                             <td>{article.type}</td>
-                            <td>{'Rascunho'}</td>
+                            <td>{article.state}</td>
+                            <td>{article.readTime}</td>
                             <td>{getDateFormat(article.updatedAt)}</td>
                             <td>{getDateFormat(article.createdAt)}</td>
                         </tr>

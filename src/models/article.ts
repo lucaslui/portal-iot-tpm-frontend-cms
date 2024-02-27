@@ -1,60 +1,21 @@
-export type ArticleModel = {
-    // id?: string
-    // title: string
-    // description: string
-    // type: string
-    // content: string
-    // imageUrl: string
-    // userId: string
-    // categoryId: string
-    // categories: any
-    // updatedAt: string
-    // createdAt: string
-    id: string
-    title: string
-    description: string
-    content: string
-    imageUrl: string
-    user: {
-      id: string
-      name: string
-      email: string
-      occupation: string
-      interests: string
-      about: string
-      imageUrl: string
-    }
-    categories: {
-      id: string
-      name: string
-      description: string
-    }
-    type: string
-    createdAt: Date
-    updatedAt: Date
-}
+import { CategoryModel } from './category'
+import { UserModel } from './user'
 
-export type ArticleViewModel = {
+export type ArticleType = 'concepts' | 'news' | 'tutorials' | 'projects'
+
+export type ArticleState = 'draft' | 'published' | 'deleted'
+
+export type ArticleModel = {
     id: string
     title: string
+    type: string
+    state: string
+    readTime: number
     description: string
     content: string
     imageUrl: string
-    user: {
-      id: string
-      name: string
-      email: string
-      occupation: string
-      interests: string
-      about: string
-      imageUrl: string
-    }
-    categories: {
-      id: string
-      name: string
-      description: string
-    }
-    type: string
+    user: UserModel
+    categories: CategoryModel[]
     createdAt: Date
     updatedAt: Date
 }

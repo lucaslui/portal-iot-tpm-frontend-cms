@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './dashboard.module.scss'
 
-import { PieChart, Pie, ResponsiveContainer, Legend, Cell, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart } from 'recharts';
+import { PieChart, Pie, ResponsiveContainer, Legend, Cell, PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts';
 import { loadArticles } from '../../services/article-service';
 import { ArticleModel } from '../../models/article';
 
@@ -26,7 +26,7 @@ const DashboardPage: React.FC = () => {
     const uniqueTypes = types?.filter((value, index, self) => self.indexOf(value) === index)
     const porcentageOfTypes = uniqueTypes?.map((type) => {
         const count = types?.filter((t) => t === type).length
-        return { name: type, value: (count / types.length) * 100 }
+        return count && types && { name: type, value: (count / types.length) * 100 }
     })
 
     const categories = articles?.map((article) => article.categories)
@@ -52,7 +52,7 @@ const DashboardPage: React.FC = () => {
                                 label
                                 legendType="circle"
                             >
-                                {porcentageOfTypes?.map((entry, index) => (
+                                {porcentageOfTypes?.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>

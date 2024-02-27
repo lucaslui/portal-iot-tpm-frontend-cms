@@ -15,8 +15,6 @@
         justify-content: flex-start;
         align-items: stretch;
 
-        gap: 16px;
-
         padding: 16px;
 
         .col {
@@ -26,13 +24,15 @@
             align-items: stretch;
 
             gap: 16px;
+
+            flex: 1;
         }
 
         .row {
             display: flex;
             flex-direction: row;
-            justify-content: stretch;
-            align-items: stretch;
+            justify-content: flex-start;
+            align-items: center;
 
             gap: 16px;
 
@@ -64,13 +64,11 @@
             }
         }
 
-        .row>.col {
-            flex: 1;
-        }
-
         .row_editor {
             display: flex;
             flex-direction: column;
+
+            margin-top: 16px;
 
             label {
                 margin-bottom: 16px;
@@ -84,6 +82,8 @@
             align-items: center;
 
             gap: 16px;
+
+            margin-top: 16px;
         }
     }
 }

@@ -1,4 +1,5 @@
-export type UserProfile = {
+export type UserModel = {
+    id: string
     name: string
     email: string
     occupation: string
@@ -6,3 +7,5 @@ export type UserProfile = {
     about: string
     imageUrl: string
 }
+
+export type UserProfile = Omit<UserModel, 'id'>

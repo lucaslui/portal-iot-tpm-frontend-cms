@@ -34,10 +34,12 @@ const AddArticle: React.FC = () => {
     const [article, setArticle] = useState({
         title: '',
         description: '',
+        type: '',
+        state: '',
+        readTime: 5,
         content: '',
         imageUrl: '',
         imageBinary: null,
-        type: '',
         categoryIds: [] as string[]
     })
 
@@ -48,6 +50,8 @@ const AddArticle: React.FC = () => {
                     title: data.title,
                     description: data.description,
                     type: data.type,
+                    state: data.state,
+                    readTime: data.readTime,
                     content: data.content,
                     imageUrl: data.imageUrl,
                     imageBinary: null,
@@ -138,8 +142,8 @@ const AddArticle: React.FC = () => {
         setArticle({ ...article, [event.target.name]: event.target.value })
     }
 
-    const handleSelectChange = (selectedOption: any): void => {
-        setArticle(oldState => ({ ...oldState, type: selectedOption.target.value }))
+    const handleSelectChange = (event: any): void => {
+        setArticle(oldState => ({ ...oldState, [event.target.name]: event.target.value }))
     }
 
     const handleSelectTreeChange = (event: any): void => {
@@ -178,9 +182,9 @@ const AddArticle: React.FC = () => {
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.row}>
                     <div className={styles.col}>
-                        <div className={styles.row}>
-                            <div className={`${styles.group} ${styles.full_width}`}>
-                                <label htmlFor="title">Título do Artigo: <span>(máx: 100 caracteres)</span></label>
+                        <div className={`${styles.row}`}>
+                            <div className={`${styles.group} ${styles.full}`}>
+                                <label htmlFor="title">Título: <span>(máx: 100 caracteres)</span></label>
                                 <input
                                     type="text"
                                     id="title"
@@ -191,9 +195,9 @@ const AddArticle: React.FC = () => {
                                 />
                             </div>
                         </div>
-                        <div className={styles.row}>
+                        <div className={`${styles.row}`}>
                             <div className={`${styles.group}`}>
-                                <label htmlFor="type">Tipo de Artigo:</label>
+                                <label htmlFor="type">Tipo de conteúdo:</label>
                                 <select
                                     className={styles.type}
                                     id="type"
@@ -207,25 +211,39 @@ const AddArticle: React.FC = () => {
                                     <option value='projects'>Projeto</option>
                                 </select>
                             </div>
+                            <div className={`${styles.group}`}>
+                                <label htmlFor="state">Estado de publicação:</label>
+                                <select
+                                    className={styles.type}
+                                    id="state"
+                                    name="state"
+                                    value={article.state}
+                                    onChange={handleSelectChange}>
+                                    <option value="" disabled selected hidden>Selecione o estado do artigo...</option>
+                                    <option value='draft'>Rascunho</option>
+                                    <option value='published'>Publicado</option>
+                                    <option value='deleted'>Excluído</option>
+                                </select>
+                            </div>
+                            <div className={`${styles.group}`}>
+                                <label htmlFor="readTime">Tempo de leitura: <span>(em minutos)</span></label>
+                                <input
+                                    type="number"
+                                    id="readTime"
+                                    name="readTime"
+                                    placeholder='Digite o tempo de leitura...'
+                                    value={article.readTime}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        <div className={`${styles.row}`}>
                             <div className={`${styles.group} ${styles.full_width}`}>
-                                <label htmlFor="type">Categoria de Artigo:</label>
+                                <label htmlFor="type">Categoria:</label>
                                 <SelectTreeGroup
                                     nodes={refitNodes(categories)}
                                     value={buildValues(article.categoryIds)}
                                     onChange={handleSelectTreeChange}
-                                />
-                            </div>
-                        </div>
-                        <div className={styles.row}>
-                            <div className={`${styles.group} ${styles.full_width}`}>
-                                <label htmlFor="description">Resumo do Artigo: <span>(máx: 200 caracteres)</span></label>
-                                <textarea
-                                    className={styles.bigInput}
-                                    id="description"
-                                    name="description"
-                                    placeholder='Digite o resumo do artigo...'
-                                    value={article.description}
-                                    onChange={handleChangeTextArea}
                                 />
                             </div>
                         </div>
@@ -235,12 +253,24 @@ const AddArticle: React.FC = () => {
                         imagePreview={article.imageUrl}
                         imageDefault={NoImage}
                         onChange={handleImageChange}
-                        label='Imagem de Capa do Artigo:'
+                        label='Imagem de capa:'
                         placeholder='Insira a imagem de capa do artigo...' />
                 </div>
-
+                <div className={styles.row}>
+                    <div className={`${styles.group} ${styles.full_width}`}>
+                        <label htmlFor="description">Descrição: <span>(máx: 200 caracteres)</span></label>
+                        <textarea
+                            className={styles.bigInput}
+                            id="description"
+                            name="description"
+                            placeholder='Digite o resumo do artigo...'
+                            value={article.description}
+                            onChange={handleChangeTextArea}
+                        />
+                    </div>
+                </div>
                 <div className={styles.row_editor}>
-                    <label>Conteúdo do Artigo:</label>
+                    <label>Conteúdo:</label>
                     <RichTextEditor
                         value={article.content}
                         onChangeValue={handleEditorChange}
