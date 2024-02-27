@@ -5,8 +5,9 @@ import styles from './articles-table.module.scss'
 
 import { ArticlesPaginatedModel, loadArticles } from '../../services/article-service'
 import { ArticleModel } from '../../models/article'
-import { getDateFormat } from '../../utils/date'
 import { Input } from '../../components'
+import { getShortStringDateFormat } from '../../utils/date'
+import articleTranslations from '../../i18n/article'
 
 const ArticlesTable: React.FC = () => {
     const [state, setStates] = useState<ArticlesPaginatedModel>()
@@ -21,8 +22,7 @@ const ArticlesTable: React.FC = () => {
     }, [page])
 
     const fetchData = async (): Promise<ArticlesPaginatedModel> => {
-        const data = await loadArticles({ page, limit: 8 })
-        return data
+        return await loadArticles({ page, limit: 8 })
     }
 
     const handleRowOnClick = (articleId: string | undefined) => {
@@ -63,11 +63,11 @@ const ArticlesTable: React.FC = () => {
                                     </div>
                                 </div>
                             </td>
-                            <td>{article.type}</td>
-                            <td>{article.state}</td>
+                            <td className={styles.capitalize}>{article.type ? articleTranslations.pt.type[article.type] : ''}</td>
+                            <td className={styles.capitalize}>{article.state ? articleTranslations.pt.state[article.state] : ''}</td>
                             <td>{article.readTime}</td>
-                            <td>{getDateFormat(article.updatedAt)}</td>
-                            <td>{getDateFormat(article.createdAt)}</td>
+                            <td>{getShortStringDateFormat(article.updatedAt)}</td>
+                            <td>{getShortStringDateFormat(article.createdAt)}</td>
                         </tr>
                     ))}
                 </tbody>
