@@ -1,0 +1,50 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.article_cell {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 2px 16px;
+
+    img {
+        width: 42px;
+        height: 42px;
+
+        border-radius: 50%;
+    }
+
+    .texts {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        gap: 4px;
+
+        span,
+        p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            max-width: 520px;
+
+            margin: 0;
+        }
+
+        span {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+    }
+}

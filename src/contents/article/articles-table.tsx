@@ -8,6 +8,7 @@ import { ArticleModel } from '../../models/article'
 import { Input } from '../../components'
 import { getShortStringDateFormat } from '../../utils/date'
 import articleTranslations from '../../i18n/article'
+import ArticleCell from '../../components/article-cell/article-cell'
 
 const ArticlesTable: React.FC = () => {
     const [state, setStates] = useState<ArticlesPaginatedModel>()
@@ -55,13 +56,7 @@ const ArticlesTable: React.FC = () => {
                     {state?.articles.map((article: ArticleModel) => (
                         <tr key={article.id} onClick={() => handleRowOnClick(article.id)}>
                             <td>
-                                <div className={styles.title}>
-                                    <img src={article.imageUrl} alt="imagem de capa"></img>
-                                    <div className={styles.texts}>
-                                        <span>{article.title}</span>
-                                        <p>{article.description}</p>
-                                    </div>
-                                </div>
+                                <ArticleCell article={article}/>
                             </td>
                             <td className={styles.capitalize}>{article.type ? articleTranslations.pt.type[article.type] : ''}</td>
                             <td className={styles.capitalize}>{article.state ? articleTranslations.pt.state[article.state] : ''}</td>
