@@ -9,6 +9,7 @@ import { CustomButton, Input } from '../../components'
 import { getShortStringDateFormat } from '../../utils/date'
 import articleTranslations from '../../i18n/article'
 import ArticleCell from '../../components/article-cell/article-cell'
+import CustomLabel from '../../components/custom-label/custom-label'
 
 const ArticlesTable: React.FC = () => {
     const [state, setStates] = useState<ArticlesPaginatedModel>()
@@ -56,11 +57,11 @@ const ArticlesTable: React.FC = () => {
                     {state?.articles.map((article: ArticleModel) => (
                         <tr key={article.id} onClick={() => handleRowOnClick(article.id)}>
                             <td>
-                                <ArticleCell article={article}/>
+                                <ArticleCell article={article} />
                             </td>
-                            <td className={styles.capitalize}>{article.type ? articleTranslations.pt.type[article.type] : ''}</td>
-                            <td className={styles.capitalize}>{article.state ? articleTranslations.pt.state[article.state] : ''}</td>
-                            <td>{article.readTime}</td>
+                            <td><CustomLabel className={styles.capitalize} text={article.type ? articleTranslations.pt.type[article.type] : ''} /></td>
+                            <td><CustomLabel className={styles.capitalize} text={article.state ? articleTranslations.pt.state[article.state] : ''} /></td>
+                            <td>{article.readTime} minutos </td>
                             <td>{getShortStringDateFormat(article.updatedAt)}</td>
                             <td>{getShortStringDateFormat(article.createdAt)}</td>
                         </tr>
