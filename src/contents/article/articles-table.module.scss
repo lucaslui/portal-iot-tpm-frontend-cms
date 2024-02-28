@@ -21,26 +21,6 @@
 
         border-radius: 8px;
 
-        .search {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-
-            gap: 8px;
-
-            input {
-                width: 400px;
-
-                border: 1px solid $background-ternary-color;
-                border-radius: 4px;
-
-                &:focus {
-                    border-color: $background-secondary-color;
-                }
-            }
-        }
-
         a {
             display: flex;
             flex-direction: row;

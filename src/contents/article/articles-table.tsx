@@ -10,6 +10,7 @@ import { getShortStringDateFormat } from '../../utils/date'
 import articleTranslations from '../../i18n/article'
 import ArticleCell from '../../components/article-cell/article-cell'
 import CustomLabel from '../../components/custom-label/custom-label'
+import InputSearch from '../../components/input-search/search'
 
 const ArticlesTable: React.FC = () => {
     const [state, setStates] = useState<ArticlesPaginatedModel>()
@@ -36,10 +37,7 @@ const ArticlesTable: React.FC = () => {
     return (
         <div className={styles.articles_table}>
             <header>
-                <div className={styles.search}>
-                    <Input type="text" placeholder="Pesquisar" />
-                    <button><i className="fas fa-search" /></button>
-                </div>
+                <InputSearch />
                 <Link to={"/articles/form"}> <CustomButton> Adicionar </CustomButton></Link>
             </header>
             <table>
