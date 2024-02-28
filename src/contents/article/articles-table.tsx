@@ -5,7 +5,7 @@ import styles from './articles-table.module.scss'
 
 import { ArticlesPaginatedModel, loadArticles } from '../../services/article-service'
 import { ArticleModel } from '../../models/article'
-import { CustomButton, Input } from '../../components'
+import { CustomButton } from '../../components'
 import { getShortStringDateFormat } from '../../utils/date'
 import articleTranslations from '../../i18n/article'
 import ArticleCell from '../../components/article-cell/article-cell'
@@ -13,19 +13,23 @@ import CustomLabel from '../../components/custom-label/custom-label'
 import InputSearch from '../../components/input-search/search'
 
 const ArticlesTable: React.FC = () => {
-    const [state, setStates] = useState<ArticlesPaginatedModel>()
-    const [page, setPage] = useState(1)
+    const [data, setData] = useState<ArticlesPaginatedModel>()
+    const [filters, setFilters] = useState({ page: 1, limit: 8, search: '' })
 
     const navigate = useNavigate();
 
     useEffect((): void => {
         fetchData()
-            .then((data) => setStates(data))
+            .then((data) => setData(data))
             .catch((error) => console.log(error))
-    }, [page])
+    }, [filters])
 
     const fetchData = async (): Promise<ArticlesPaginatedModel> => {
-        return await loadArticles({ page, limit: 8 })
+        return await loadArticles(filters)
+    }
+
+    const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilters({ ...filters, search: event.target.value })
     }
 
     const handleRowOnClick = (articleId: string | undefined) => {
@@ -37,7 +41,7 @@ const ArticlesTable: React.FC = () => {
     return (
         <div className={styles.articles_table}>
             <header>
-                <InputSearch />
+                <InputSearch value={filters.search} onChange={handleSearch}/>
                 <Link to={"/articles/form"}> <CustomButton> Adicionar </CustomButton></Link>
             </header>
             <table>
@@ -52,7 +56,7 @@ const ArticlesTable: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {state?.articles.map((article: ArticleModel) => (
+                    {data?.articles.map((article: ArticleModel) => (
                         <tr key={article.id} onClick={() => handleRowOnClick(article.id)}>
                             <td>
                                 <ArticleCell article={article} />
@@ -67,11 +71,11 @@ const ArticlesTable: React.FC = () => {
                 </tbody>
             </table>
             <footer>
-                <span>Mostrando {state?.articles.length} de {state?.totalItems} resultados</span>
+                <span>Mostrando {data?.articles.length} de {data?.totalItems} resultados</span>
                 <div>
-                    <button onClick={() => setPage(page - 1)} disabled={page === 1}><i className="fas fa-chevron-left" /></button>
-                    <span>{page} de {state?.totalPages}</span>
-                    <button onClick={() => setPage(page + 1)} disabled={page === state?.totalPages}><i className="fas fa-chevron-right" /></button>
+                    <button onClick={() => setFilters({...filters, page: filters.page - 1})} disabled={filters.page === 1}><i className="fas fa-chevron-left" /></button>
+                    <span>{filters.page} de {data?.totalPages}</span>
+                    <button onClick={() => setFilters({...filters, page: filters.page + 1})} disabled={filters.page === data?.totalPages}><i className="fas fa-chevron-right" /></button>
                 </div>
             </footer>
         </div>

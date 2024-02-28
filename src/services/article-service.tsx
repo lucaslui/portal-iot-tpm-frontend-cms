@@ -5,6 +5,7 @@ import { UnexpectedError } from '../errors/unexpected-error'
 import { ArticleModel } from '../models/article'
 
 export type LoadArticlesParams = {
+    search?: string
     page?: number
     limit?: number
     userId?: string
