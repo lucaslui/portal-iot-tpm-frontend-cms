@@ -5,7 +5,7 @@ import styles from './articles-table.module.scss'
 
 import { ArticlesPaginatedModel, loadArticles } from '../../services/article-service'
 import { ArticleModel } from '../../models/article'
-import { Input } from '../../components'
+import { CustomButton, Input } from '../../components'
 import { getShortStringDateFormat } from '../../utils/date'
 import articleTranslations from '../../i18n/article'
 import ArticleCell from '../../components/article-cell/article-cell'
@@ -39,7 +39,7 @@ const ArticlesTable: React.FC = () => {
                     <Input type="text" placeholder="Pesquisar" />
                     <button><i className="fas fa-search" /></button>
                 </div>
-                <Link to={"/articles/form"}> Adicionar </Link>
+                <Link to={"/articles/form"}> <CustomButton> Adicionar </CustomButton></Link>
             </header>
             <table>
                 <thead>

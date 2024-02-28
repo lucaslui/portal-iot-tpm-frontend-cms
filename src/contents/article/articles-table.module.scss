@@ -7,8 +7,6 @@
     justify-content: flex-start;
     align-items: stretch;
 
-    gap: 8px;
-
     padding: 16px 24px;
 
     header {
@@ -41,39 +39,13 @@
                     border-color: $background-secondary-color;
                 }
             }
-
-            button {
-                padding: 8px;
-
-                border: none;
-                border-radius: 8px;
-
-                background: $background-secondary-color;
-                color: $primary-color;
-
-                font-size: 1rem;
-
-                outline: none;
-
-                &:hover {
-                    background: $background-ternary-color;
-                }
-            }
         }
 
         a {
-            padding: 8px 16px;
-
-            border-radius: 8px;
-
-            color: $primary-color;
-            background-color: $background-secondary-color;
-
-            cursor: pointer;
-
-            &:hover {
-                background: $focus-color;
-            }
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
         }
     }
 
@@ -82,14 +54,16 @@
 
         border-collapse: collapse;
 
-        border-radius: 8px;
         background-color: #2d333b;
 
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+
         thead {
-            font-size: 1rem;
+            font-size: 0.8rem;
 
             th {
-                padding: 16px;
+                padding: 16px 16px;
                 text-align: center;
             }
         }
@@ -144,13 +118,20 @@
         justify-content: space-between;
         align-items: center;
 
+        background-color: #2d333b;
+
+        padding: 8px 16px;
+
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+
+        margin-top: 4px;
+
         span {
             font-size: 0.7rem;
             font-weight: 500;
 
             color: $secondary-color;
-
-            margin-left: 8px;
         }
 
         div {
