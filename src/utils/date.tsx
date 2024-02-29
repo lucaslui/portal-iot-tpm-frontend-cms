@@ -1,6 +1,6 @@
 export const getShortDateFormat = (date: Date | string): string => {
     const ISODate = new Date(date)
-    const day = ISODate.getDay()
+    const day = ISODate.getDate()
     const dayConverted = day < 10 ? `0${day}` : day
     const month = ISODate.getMonth() + 1
     const monthConverter = month < 10 ? `0${month}` : month
@@ -9,9 +9,9 @@ export const getShortDateFormat = (date: Date | string): string => {
 
 export const getLongStringDateFormat = (date: Date | string): string => {
     const ISODate = new Date(date)
-    const day = ISODate.getDay()
+    const day = ISODate.getDate()
     const dayConverted = day < 10 ? `0${day}` : day
-    const month = ISODate.getMonth() + 1
+    const month = ISODate.getMonth()
     const months = [
         'janeiro',
         'fevereiro',
@@ -31,9 +31,9 @@ export const getLongStringDateFormat = (date: Date | string): string => {
 
 export const getShortStringDateFormat = (date: Date | string): string => {
     const ISODate = new Date(date)
-    const day = ISODate.getDay()
+    const day = ISODate.getDate()
     const dayConverted = day < 10 ? `0${day}` : day
-    const month = ISODate.getMonth() + 1
+    const month = ISODate.getMonth()
     const months = [
         'jan',
         'fev',
