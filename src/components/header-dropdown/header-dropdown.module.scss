@@ -12,11 +12,40 @@
 
     padding: 0 36px 0 64px;
 
-    img {
-        border-radius: 50%;
-        height: 52px;
-        width: 52px;
+    .profile {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        gap: 12px;
+
+        .text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+
+            gap: 4px;
+
+            h3 {
+                font-size: 1rem;
+                font-weight: 600;
+            }
+
+            span {
+                font-size: 0.8rem;
+                color: #adbac7;
+            }
+        }
+
+        img {
+            border-radius: 50%;
+            height: 52px;
+            width: 52px;
+        }
     }
+
 
     i {
         font-size: 1rem;

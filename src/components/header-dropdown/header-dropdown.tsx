@@ -28,6 +28,7 @@ const HeaderDropdown: React.FC = () => {
 
     const [profile, setProfile] = useState({
         name: '',
+        occupation: '',
         imageUrl: '',
     })
 
@@ -37,6 +38,7 @@ const HeaderDropdown: React.FC = () => {
                 setProfile({
                     ...profile,
                     name: userProfile.name,
+                    occupation: userProfile.occupation,
                     imageUrl: userProfile.imageUrl,
                 })
             })
@@ -56,7 +58,13 @@ const HeaderDropdown: React.FC = () => {
 
     return (
         <div className={styles.header_dropdown}>
-            <img src={profile.imageUrl ? profile.imageUrl : DefaultUserImage} alt="default-photo" />
+            <div className={styles.profile}>
+                <div className={styles.text}>
+                    <h3>{profile.name}</h3>
+                    <span>{profile.occupation}</span>
+                </div>
+                <img src={profile.imageUrl ? profile.imageUrl : DefaultUserImage} alt="default-photo" />
+            </div>
             <nav className={styles.dropdown_content}>
                 {dropdownItems.map((item, index) => (
                     <Link className={styles.item} to={item.path} key={index}>
