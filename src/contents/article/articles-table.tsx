@@ -14,7 +14,7 @@ import InputSearch from '../../components/input-search/search'
 
 const ArticlesTable: React.FC = () => {
     const [data, setData] = useState<ArticlesPaginatedModel>()
-    const [filters, setFilters] = useState({ page: 1, limit: 8, search: '' })
+    const [filters, setFilters] = useState({ page: 1, limit: 7, search: '' })
 
     const navigate = useNavigate();
 
