@@ -1,0 +1,43 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.filter_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 8px;
+
+    position: relative;
+
+    i {
+        font-size: 0.9rem;
+        color: #adbac7;
+
+        position: absolute;
+        left: 12px;
+
+    }
+
+    select {
+        color: $primary-color;
+        background-color: $background-button-color;
+
+        border: 1px solid #24242c;
+        border-radius: 4px;
+
+        padding: 12px 32px 12px 38px;
+
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+
+        background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+        background-repeat: no-repeat;
+        background-position-x: 97%;
+        background-position-y: 8px;
+
+        cursor: pointer;
+    }
+}

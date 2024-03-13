@@ -21,6 +21,15 @@
 
         border-radius: 8px;
 
+        .filters {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            gap: 12px;
+        }
+
         a {
             display: flex;
             flex-direction: row;

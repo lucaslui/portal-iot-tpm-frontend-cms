@@ -11,10 +11,17 @@ import articleTranslations from '../../i18n/article'
 import ArticleCell from '../../components/article-cell/article-cell'
 import CustomLabel from '../../components/custom-label/custom-label'
 import InputSearch from '../../components/input-search/search'
+import FilterWrapper from '../../components/filter-by-type/filter-wrapper'
 
 const ArticlesTable: React.FC = () => {
     const [data, setData] = useState<ArticlesPaginatedModel>()
-    const [filters, setFilters] = useState({ page: 1, limit: 7, search: '' })
+    const [filters, setFilters] = useState({ 
+        page: 1, 
+        limit: 7, 
+        search: '',
+        type: '',
+        state: '' 
+    })
 
     const navigate = useNavigate();
 
@@ -32,6 +39,10 @@ const ArticlesTable: React.FC = () => {
         setFilters({ ...filters, search: event.target.value })
     }
 
+    const handleFilter = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setFilters({ ...filters, [event.target.name]: event.target.value })
+    }
+
     const handleRowOnClick = (articleId: string | undefined) => {
         if (articleId) {
             navigate(`/articles/form/${articleId}`);
@@ -41,7 +52,24 @@ const ArticlesTable: React.FC = () => {
     return (
         <div className={styles.articles_table}>
             <header>
-                <InputSearch value={filters.search} onChange={handleSearch}/>
+                <div className={styles.filters}>
+                    <InputSearch value={filters.search} onChange={handleSearch} />
+                    <FilterWrapper name="type" value={filters.type} onChange={handleFilter}>
+                        <option value="" disabled selected>Filtrar por tipo</option>
+                        <option value="">Todos</option>
+                        <option value="concepts">Conceitos</option>
+                        <option value="tutorials">Tutoriais</option>
+                        <option value="projects">Projetos</option>
+                        <option value="news">Notícias</option>
+                    </FilterWrapper>
+                    <FilterWrapper name="state" value={filters.state} onChange={handleFilter}>
+                        <option value="" disabled selected>Filtrar por Estado</option>
+                        <option value="">Todos</option>
+                        <option value="draft">Rascunho</option>
+                        <option value="published">Publicado</option>
+                        <option value="deleted">Excluído</option>
+                    </FilterWrapper>
+                </div>
                 <Link to={"/articles/form"}> <CustomButton> Adicionar </CustomButton></Link>
             </header>
             <table>
@@ -73,9 +101,9 @@ const ArticlesTable: React.FC = () => {
             <footer>
                 <span>Mostrando {data?.articles.length} de {data?.totalItems} resultados</span>
                 <div>
-                    <button onClick={() => setFilters({...filters, page: filters.page - 1})} disabled={filters.page === 1}><i className="fas fa-chevron-left" /></button>
+                    <button onClick={() => setFilters({ ...filters, page: filters.page - 1 })} disabled={filters.page === 1}><i className="fas fa-chevron-left" /></button>
                     <span>{filters.page} de {data?.totalPages}</span>
-                    <button onClick={() => setFilters({...filters, page: filters.page + 1})} disabled={filters.page === data?.totalPages}><i className="fas fa-chevron-right" /></button>
+                    <button onClick={() => setFilters({ ...filters, page: filters.page + 1 })} disabled={filters.page === data?.totalPages}><i className="fas fa-chevron-right" /></button>
                 </div>
             </footer>
         </div>
