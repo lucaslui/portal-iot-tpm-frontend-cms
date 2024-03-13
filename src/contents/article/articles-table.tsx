@@ -55,7 +55,7 @@ const ArticlesTable: React.FC = () => {
                 <div className={styles.filters}>
                     <InputSearch value={filters.search} onChange={handleSearch} />
                     <FilterWrapper name="type" value={filters.type} onChange={handleFilter}>
-                        <option value="" disabled selected>Filtrar por tipo</option>
+                        <option value="" disabled defaultValue="">Filtrar por tipo</option>
                         <option value="">Todos</option>
                         <option value="concepts">Conceitos</option>
                         <option value="tutorials">Tutoriais</option>
@@ -63,11 +63,11 @@ const ArticlesTable: React.FC = () => {
                         <option value="news">Notícias</option>
                     </FilterWrapper>
                     <FilterWrapper name="state" value={filters.state} onChange={handleFilter}>
-                        <option value="" disabled selected>Filtrar por Estado</option>
+                        <option value="" disabled defaultValue="">Filtrar por Estado</option>
                         <option value="">Todos</option>
-                        <option value="draft">Rascunho</option>
-                        <option value="published">Publicado</option>
-                        <option value="deleted">Excluído</option>
+                        <option value="draft">Rascunhos</option>
+                        <option value="published">Publicados</option>
+                        <option value="deleted">Excluídos</option>
                     </FilterWrapper>
                 </div>
                 <Link to={"/articles/form"}> <CustomButton> Adicionar </CustomButton></Link>
