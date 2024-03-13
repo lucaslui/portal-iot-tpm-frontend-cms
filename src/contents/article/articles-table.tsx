@@ -7,20 +7,20 @@ import { ArticlesPaginatedModel, loadArticles } from '../../services/article-ser
 import { ArticleModel } from '../../models/article'
 import { CustomButton } from '../../components'
 import { getShortStringDateFormat } from '../../utils/date'
-import articleTranslations from '../../i18n/article'
 import ArticleCell from '../../components/article-cell/article-cell'
-import CustomLabel from '../../components/custom-label/custom-label'
+import TypeLabel from '../../components/type-label/type-label'
 import InputSearch from '../../components/input-search/search'
 import FilterWrapper from '../../components/filter-by-type/filter-wrapper'
+import StateLabel from '../../components/state-label/state-label'
 
 const ArticlesTable: React.FC = () => {
     const [data, setData] = useState<ArticlesPaginatedModel>()
-    const [filters, setFilters] = useState({ 
-        page: 1, 
-        limit: 7, 
+    const [filters, setFilters] = useState({
+        page: 1,
+        limit: 7,
         search: '',
         type: '',
-        state: '' 
+        state: ''
     })
 
     const navigate = useNavigate();
@@ -35,11 +35,7 @@ const ArticlesTable: React.FC = () => {
         return await loadArticles(filters)
     }
 
-    const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFilters({ ...filters, search: event.target.value })
-    }
-
-    const handleFilter = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleFilter = async (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         setFilters({ ...filters, [event.target.name]: event.target.value })
     }
 
@@ -53,7 +49,7 @@ const ArticlesTable: React.FC = () => {
         <div className={styles.articles_table}>
             <header>
                 <div className={styles.filters}>
-                    <InputSearch value={filters.search} onChange={handleSearch} />
+                    <InputSearch value={filters.search} onChange={handleFilter} />
                     <FilterWrapper name="type" value={filters.type} onChange={handleFilter}>
                         <option value="" disabled defaultValue="">Filtrar por tipo</option>
                         <option value="">Todos</option>
@@ -89,8 +85,8 @@ const ArticlesTable: React.FC = () => {
                             <td>
                                 <ArticleCell article={article} />
                             </td>
-                            <td><CustomLabel className={styles.capitalize} text={article.type ? articleTranslations.pt.type[article.type] : ''} /></td>
-                            <td><CustomLabel className={styles.capitalize} text={article.state ? articleTranslations.pt.state[article.state] : ''} /></td>
+                            <td><TypeLabel type={article.type} /></td>
+                            <td><StateLabel state={article.state} /></td>
                             <td>{article.readTime} minutos </td>
                             <td>{getShortStringDateFormat(article.updatedAt)}</td>
                             <td>{getShortStringDateFormat(article.createdAt)}</td>

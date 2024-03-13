@@ -2,14 +2,13 @@ import { CategoryModel } from './category'
 import { UserModel } from './user'
 
 export type ArticleType = 'concepts' | 'news' | 'tutorials' | 'projects'
-
 export type ArticleState = 'draft' | 'published' | 'deleted'
 
 export type ArticleModel = {
     id: string
     title: string
-    type: string
-    state: string
+    type: ArticleType
+    state: ArticleState
     readTime: number
     description: string
     content: string
