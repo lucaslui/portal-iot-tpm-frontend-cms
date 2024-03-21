@@ -4,13 +4,13 @@
 .login_logo {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin: $outside-gap;
 
     img {
         height: 82px;
         width: 82px;
-        margin: $outside-gap;
+        margin: $outside-margin;
     }
 
     section {

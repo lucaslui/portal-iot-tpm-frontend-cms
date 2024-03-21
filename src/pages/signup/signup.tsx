@@ -76,19 +76,15 @@ const SignUpPage: React.FC = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={styles.signup}>
-            <Logo />
-            <hr />
-            <div className={styles.form}>
-                <h2>Criar Conta</h2>
-                <Input onChange={handleChange} title={state.nameError} type="text" name="name" placeholder="Digite seu nome" />
-                <Input onChange={handleChange} title={state.emailError} type="email" name="email" placeholder="Digite seu e-mail" />
-                <Input onChange={handleChange} title={state.passwordError} type="password" name="password" placeholder="Digite sua senha" />
-                <Input onChange={handleChange} title={state.passwordConfirmationError} type="password" name="passwordConfirmation" placeholder="Digite sua senha novamente" />
-                <CustomButton disabled={state.isFormInvalid} type="submit" value="Criar"> Criar </CustomButton>
-                <Link to="/auth/signin" className={styles.link}> Já tem cadastro? clique aqui </Link>
-                <FormStatus isLoading={state.isLoading} mainError={state.mainError} />
-            </div>
+        <form className={styles.signup} onSubmit={handleSubmit}>
+            <h2>Criar Conta</h2>
+            <Input onChange={handleChange} title={state.nameError} type="text" name="name" placeholder="Digite seu nome" />
+            <Input onChange={handleChange} title={state.emailError} type="email" name="email" placeholder="Digite seu e-mail" />
+            <Input onChange={handleChange} title={state.passwordError} type="password" name="password" placeholder="Digite sua senha" />
+            <Input onChange={handleChange} title={state.passwordConfirmationError} type="password" name="passwordConfirmation" placeholder="Digite sua senha novamente" />
+            <CustomButton disabled={state.isFormInvalid} type="submit" value="Criar"> Criar </CustomButton>
+            <Link to="/auth/signin" className={styles.link}> Já tem cadastro? clique aqui </Link>
+            <FormStatus isLoading={state.isLoading} mainError={state.mainError} />
         </form>
     )
 }

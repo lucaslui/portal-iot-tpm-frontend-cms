@@ -9,7 +9,7 @@
 
     gap: 16px;
 
-    padding: $inside-gap;
+    padding: $inside-padding;
 
     form {
         display: flex;
@@ -19,7 +19,7 @@
 
         gap: 16px;
 
-        margin-top: $outside-gap;
+        margin-top: $outside-margin;
 
         .col {
             display: flex;
