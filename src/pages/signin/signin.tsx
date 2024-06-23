@@ -5,7 +5,7 @@ import styles from './signin.module.scss'
 
 import AccountContext from '../../contexts/account-context'
 
-import { CustomButton, FormStatus, Input, Logo } from '../../components'
+import { CustomButton, FormStatus, Input } from '../../components'
 import { signin } from '../../services/auth-service'
 
 const SignInPage: React.FC = () => {
