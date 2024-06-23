@@ -7,7 +7,7 @@ import AccountContext from '../../contexts/account-context'
 
 import { signup } from '../../services/auth-service'
 
-import { Logo, Input, CustomButton, FormStatus } from '../../components'
+import { Input, CustomButton, FormStatus } from '../../components'
 
 const SignUpPage: React.FC = () => {
     const { setCurrentAccount } = useContext(AccountContext)
