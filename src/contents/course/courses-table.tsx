@@ -33,7 +33,6 @@ const CoursesTable: React.FC = () => {
     useEffect((): void => {
         fetchData()
             .then((data) => setData(data))
-            .then(() => console.log(data))
             .catch((error) => console.log(error))
     }, [filters])
 
