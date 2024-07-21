@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import styles from './articles-table.module.scss'
+import styles from './courses-table.module.scss'
 
-import { loadArticles } from '../../services/article-service'
-import { ArticleModel } from '../../models/article'
 import { CustomButton } from '../../components'
 import { getShortStringDateFormat } from '../../utils/date'
-import ArticleCell from '../../components/article-cell/article-cell'
-import TypeLabel from '../../components/type-label/type-label'
 import InputSearch from '../../components/input-search/search'
 import FilterWrapper from '../../components/filter-by-type/filter-wrapper'
-import StateLabel from '../../components/state-label/state-label'
+import { loadCourses } from '../../services/course-service'
+import { CourseModel } from '../../models/course'
 import { PaginationModel } from '../../models/shared/pagination'
 
-const ArticlesTable: React.FC = () => {
-    const [data, setData] = useState<PaginationModel<ArticleModel>>()
+const CoursesTable: React.FC = () => {
+    const [data, setData] = useState<PaginationModel<CourseModel>>({
+        data: [],
+        count: 0,
+        page: 1,
+        totalPages: 1,
+        totalItems: 0
+    })
+
     const [filters, setFilters] = useState({
         page: 1,
         limit: 7,
@@ -29,25 +33,26 @@ const ArticlesTable: React.FC = () => {
     useEffect((): void => {
         fetchData()
             .then((data) => setData(data))
+            .then(() => console.log(data))
             .catch((error) => console.log(error))
     }, [filters])
 
-    const fetchData = async (): Promise<PaginationModel<ArticleModel>> => {
-        return await loadArticles(filters)
+    const fetchData = async (): Promise<PaginationModel<CourseModel>> => {
+        return await loadCourses(filters)
     }
 
     const handleFilter = async (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         setFilters({ ...filters, [event.target.name]: event.target.value })
     }
 
-    const handleRowOnClick = (articleId: string | undefined) => {
-        if (articleId) {
-            navigate(`/articles/form/${articleId}`);
+    const handleRowOnClick = (courseId: string | undefined) => {
+        if (courseId) {
+            navigate(`/courses/form/${courseId}`);
         }
     }
 
     return (
-        <div className={styles.articles_table}>
+        <div className={styles.courses_table}>
             <header>
                 <div className={styles.filters}>
                     <InputSearch value={filters.search} onChange={handleFilter} />
@@ -67,12 +72,13 @@ const ArticlesTable: React.FC = () => {
                         <option value="deleted">Excluídos</option>
                     </FilterWrapper>
                 </div>
-                <Link to={"/articles/form"}> <CustomButton> Adicionar </CustomButton></Link>
+                <Link to={"/courses/form"}> <CustomButton> Adicionar </CustomButton></Link>
             </header>
+            
             <table>
                 <thead>
                     <tr>
-                        <th>Artigo</th>
+                        <th>Curso</th>
                         <th>Tipo</th>
                         <th>Estado</th>
                         <th>Temp. Leitura</th>
@@ -81,22 +87,20 @@ const ArticlesTable: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.data.map((article: ArticleModel) => (
-                        <tr key={article.id} onClick={() => handleRowOnClick(article.id)}>
-                            <td>
-                                <ArticleCell article={article} />
-                            </td>
-                            <td><TypeLabel type={article.type} /></td>
-                            <td><StateLabel state={article.state} /></td>
-                            <td>{article.readTime} minutos </td>
-                            <td>{getShortStringDateFormat(article.updatedAt)}</td>
-                            <td>{getShortStringDateFormat(article.createdAt)}</td>
+                    {data?.data?.map((course: CourseModel) => (
+                        <tr key={course.id} onClick={() => handleRowOnClick(course.id)}>
+                            <td>{course.title}</td>
+                            <td>{course.description}</td>
+                            <td>{course.type}</td>
+                            <td>{course.landingPageUrl}</td>
+                            <td>{getShortStringDateFormat(course.updatedAt)}</td>
+                            <td>{getShortStringDateFormat(course.createdAt)}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
             <footer>
-                <span>Mostrando {data?.data.length} de {data?.totalItems} resultados</span>
+                <span>Mostrando {data?.data?.length} de {data?.totalItems} resultados</span>
                 <div>
                     <button onClick={() => setFilters({ ...filters, page: filters.page - 1 })} disabled={filters.page === 1}><i className="fas fa-chevron-left" /></button>
                     <span>{filters.page} de {data?.totalPages}</span>
@@ -107,4 +111,4 @@ const ArticlesTable: React.FC = () => {
     )
 }
 
-export default ArticlesTable
+export default CoursesTable

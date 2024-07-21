@@ -1,0 +1,155 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.courses_table {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    padding: 16px 24px;
+
+    header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: stretch;
+
+        padding: 12px;
+
+        background-color: #2d333b;
+
+        border-radius: 8px;
+
+        .filters {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        a {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    table {
+        margin-top: 12px;
+
+        border-collapse: collapse;
+
+        background-color: #2d333b;
+
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+
+        thead {
+            font-size: 0.8rem;
+
+            th {
+                padding: 16px;
+                text-align: center;
+            }
+        }
+
+        tbody {
+            font-size: 0.8rem;
+
+            tr {
+                td {
+                    padding: 10px;
+                    text-align: center;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: $logo-color;
+                }
+            }
+
+            td {
+                border-top: 4px solid $background-secondary-color;
+
+                font-family: "Poppins", sans-serif;
+                font-size: 0.9rem;
+            }
+
+            .capitalize {
+                text-transform: capitalize;
+            }
+
+            .actions {
+                button {
+                    padding: 8px;
+
+                    color: $primary-color;
+
+                    background: transparent;
+
+                    cursor: pointer;
+
+                    &:hover {
+                        color: $logo-color;
+                    }
+                }
+            }
+        }
+    }
+
+    footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        background-color: #2d333b;
+
+        padding: 8px 16px;
+
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+
+        margin-top: 4px;
+
+        span {
+            font-size: 0.7rem;
+            font-weight: 500;
+
+            color: $secondary-color;
+        }
+
+        div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            gap: 8px;
+
+            button {
+                padding: 8px;
+
+                color: $primary-color;
+                background-color: $background-color;
+
+                cursor: pointer;
+
+                border-radius: 4px;
+
+                &:hover {
+                    color: $logo-color;
+                }
+
+                &:disabled {
+                    color: $disabled-color;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}

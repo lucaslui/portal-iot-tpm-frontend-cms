@@ -2,10 +2,10 @@ import axios from 'axios'
 
 import { InvalidCredentialsError } from '../errors/invalid-credentials-error'
 import { UnexpectedError } from '../errors/unexpected-error'
-import { ArticleModel } from '../models/article'
+import { CourseModel } from '../models/course'
 import { PaginationModel } from '../models/shared/pagination'
 
-export type LoadArticlesParams = {
+export type LoadCoursesParams = {
     search?: string
     page?: number
     limit?: number
@@ -15,7 +15,7 @@ export type LoadArticlesParams = {
     year?: number
 }
 
-export type AddArticleParams = {
+export type AddCourseParams = {
     title: string
     description: string
     type: string
@@ -26,7 +26,7 @@ export type AddArticleParams = {
     categoryIds: string[]
 }
 
-const addArticle = async (params: AddArticleParams, accessToken: string): Promise<ArticleModel> => {
+const addCourse = async (params: AddCourseParams, accessToken: string): Promise<CourseModel> => {
     const data = new FormData()
 
     data.append('title', params.title)
@@ -42,7 +42,7 @@ const addArticle = async (params: AddArticleParams, accessToken: string): Promis
     }
 
     const httpResponse = await axios.request({
-        url: `${import.meta.env.VITE_API_URL}/api/articles`,
+        url: `${import.meta.env.VITE_API_URL}/api/courses`,
         method: 'POST',
         data,
         headers: { 'x-access-token': accessToken }
@@ -55,7 +55,7 @@ const addArticle = async (params: AddArticleParams, accessToken: string): Promis
     }
 }
 
-const updateArticle = async (articleId: string, params: AddArticleParams, accessToken: string,): Promise<void> => {
+const updateCourse = async (courseId: string, params: AddCourseParams, accessToken: string,): Promise<void> => {
     const data = new FormData()
 
     data.append('title', params.title)
@@ -71,7 +71,7 @@ const updateArticle = async (articleId: string, params: AddArticleParams, access
     }
 
     const httpResponse = await axios.request({
-        url: `${import.meta.env.VITE_API_URL}/api/articles/${articleId}`,
+        url: `${import.meta.env.VITE_API_URL}/api/courses/${courseId}`,
         method: 'PUT',
         data,
         headers: { 'x-access-token': accessToken }
@@ -84,10 +84,10 @@ const updateArticle = async (articleId: string, params: AddArticleParams, access
     }
 }
 
-const loadArticles = async (params?: LoadArticlesParams): Promise<PaginationModel<ArticleModel>> => {
+const loadCourses = async (params?: LoadCoursesParams): Promise<PaginationModel<CourseModel>> => {
     // pass as query parameters in request
     const httpResponse = await axios.request({
-        url: `${import.meta.env.VITE_API_URL}/api/articles`,
+        url: `${import.meta.env.VITE_API_URL}/api/courses`,
         method: 'get',
         params
     })
@@ -99,4 +99,4 @@ const loadArticles = async (params?: LoadArticlesParams): Promise<PaginationMode
     }
 }
 
-export { addArticle, updateArticle, loadArticles }
+export { addCourse, updateCourse, loadCourses }

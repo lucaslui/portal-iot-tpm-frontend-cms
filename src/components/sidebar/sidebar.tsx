@@ -22,6 +22,11 @@ const navbarItems = [
         icon: <i className="fas fa-newspaper" />
     },
     {
+        name: 'Lista de Cursos',
+        path: 'courses',
+        icon: <i className="fas fa-chalkboard-teacher" />
+    },
+    {
         name: 'Lista de Categorias',
         path: 'categories',
         icon: <i className="fas fa-list" />

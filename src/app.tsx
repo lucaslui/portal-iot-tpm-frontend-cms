@@ -16,6 +16,8 @@ import AccountSettings from './contents/account/settings'
 import Profile from './contents/profile/profile'
 import ArticlesTable from './contents/article/articles-table'
 import CategoriesTable from './contents/category/category-table'
+import CoursesTable from './contents/course/courses-table';
+import AddCourse from './contents/course/course-form';
 
 const App: React.FC = () => {
     return (
@@ -30,6 +32,9 @@ const App: React.FC = () => {
                                 <Route path='articles' element={<ArticlesTable />} />
                                 <Route path='articles/form' element={<AddArticle />} />
                                 <Route path='articles/form/:articleId' element={<AddArticle />} />
+                                <Route path='courses' element={<CoursesTable />} />
+                                <Route path='courses/form' element={<AddCourse />} />
+                                <Route path='courses/form/:articleId' element={<AddCourse />} />
                                 <Route path='categories' element={<CategoriesTable />} />
                                 <Route path='settings/profile' element={<Profile />} />
                                 <Route path='settings/password' element={<AccountSettings />} />

@@ -1,0 +1,89 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.course_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    gap: 16px;
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+
+        padding: 16px;
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+
+            gap: 16px;
+
+            flex: 1;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            gap: 16px;
+
+            .group {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: stretch;
+
+                gap: 8px;
+
+                flex: 1;
+
+                label {
+                    font-size: 1rem;
+
+                    span {
+                        font-size: 0.7rem;
+                        color: $secondary-color;
+                    }
+                }
+
+                select {
+                    option {
+                        margin: 8px;
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+
+        .row_editor {
+            display: flex;
+            flex-direction: column;
+
+            margin-top: 16px;
+
+            label {
+                margin-bottom: 16px;
+            }
+        }
+
+        .flex_end {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+
+            gap: 16px;
+
+            margin-top: 16px;
+        }
+    }
+}
