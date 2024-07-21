@@ -16,8 +16,8 @@ import AccountSettings from './contents/account/settings'
 import Profile from './contents/profile/profile'
 import ArticlesTable from './contents/article/articles-table'
 import CategoriesTable from './contents/category/category-table'
-import CoursesTable from './contents/course/courses-table';
 import AddCourse from './contents/course/course-form';
+import CoursesTable from './contents/course/courses-table';
 
 const App: React.FC = () => {
     return (

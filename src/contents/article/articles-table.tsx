@@ -13,6 +13,7 @@ import InputSearch from '../../components/input-search/search'
 import FilterWrapper from '../../components/filter-by-type/filter-wrapper'
 import StateLabel from '../../components/state-label/state-label'
 import { PaginationModel } from '../../models/shared/pagination'
+import Loading from '../../components/loading/loading'
 
 const ArticlesTable: React.FC = () => {
     const [data, setData] = useState<PaginationModel<ArticleModel>>()
@@ -44,6 +45,10 @@ const ArticlesTable: React.FC = () => {
         if (articleId) {
             navigate(`/articles/form/${articleId}`);
         }
+    }
+
+    if (!data) {
+        return <Loading />
     }
 
     return (

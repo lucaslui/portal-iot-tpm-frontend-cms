@@ -10,15 +10,10 @@ import FilterWrapper from '../../components/filter-by-type/filter-wrapper'
 import { loadCourses } from '../../services/course-service'
 import { CourseModel } from '../../models/course'
 import { PaginationModel } from '../../models/shared/pagination'
+import Loading from '../../components/loading/loading'
 
 const CoursesTable: React.FC = () => {
-    const [data, setData] = useState<PaginationModel<CourseModel>>({
-        data: [],
-        count: 0,
-        page: 1,
-        totalPages: 1,
-        totalItems: 0
-    })
+    const [data, setData] = useState<PaginationModel<CourseModel>>()
 
     const [filters, setFilters] = useState({
         page: 1,
@@ -50,6 +45,10 @@ const CoursesTable: React.FC = () => {
         }
     }
 
+    if (!data) {
+        return <Loading />
+    }
+
     return (
         <div className={styles.courses_table}>
             <header>
@@ -73,7 +72,6 @@ const CoursesTable: React.FC = () => {
                 </div>
                 <Link to={"/courses/form"}> <CustomButton> Adicionar </CustomButton></Link>
             </header>
-            
             <table>
                 <thead>
                     <tr>
@@ -107,6 +105,8 @@ const CoursesTable: React.FC = () => {
                 </div>
             </footer>
         </div>
+
+
     )
 }
 
