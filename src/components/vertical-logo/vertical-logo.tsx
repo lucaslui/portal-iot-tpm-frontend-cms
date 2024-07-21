@@ -1,21 +1,21 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-import styles from './header-logo.module.scss'
+import styles from './vertical-logo.module.scss'
 
 import LogoImage from '../../assets/imgs/logo.png'
 
-const HeaderLogo: React.FC = () => {
+type Props = React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
+
+const VerticalLogo: React.FC<Props> = () => {
     return (
-        <Link to='/' className={styles.header_logo}>
+        <div className={styles.vertical_logo}>
             <img src={LogoImage} alt="logo" />
             <div className={styles.title}>
                 <h1> Portal <strong>IoT-TpM</strong> Unicamp </h1>
                 <h2> Conteúdo sobre Internet das Coisas de forma simples, prática e objetiva </h2>
             </div>
-        </Link>
+        </div>
     )
 }
 
-export default HeaderLogo
-
+export default VerticalLogo

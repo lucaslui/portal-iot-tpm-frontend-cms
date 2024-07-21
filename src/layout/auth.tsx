@@ -3,14 +3,14 @@ import { Outlet } from 'react-router-dom'
 
 import styles from './auth.module.scss'
 
-import { Footer, Logo, ParticlesBackground } from '../components'
+import { Footer, ParticlesBackground, VerticalLogo } from '../components'
 
 const AuthLayout: React.FC = () => {
     return (
         <div className={styles.authentication}>
             <ParticlesBackground />
             <div className={styles.container}>
-                <Logo />
+                <VerticalLogo />
                 <hr/>
                 <Outlet />
             </div>

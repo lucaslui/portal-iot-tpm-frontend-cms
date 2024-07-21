@@ -8,9 +8,9 @@
     justify-content: center;
     align-items: center;
 
-    cursor: pointer;
+    padding: 24px;
 
-    padding: 0 36px 0 64px;
+    cursor: pointer;
 
     .profile {
         display: flex;
@@ -62,7 +62,7 @@
         position: absolute;
 
         top: 80px;
-        right: 0;
+        right: 10px;
 
         background-color: $background-secondary-color;
 

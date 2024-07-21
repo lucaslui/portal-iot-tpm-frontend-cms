@@ -1,27 +1,26 @@
-@import '../../styles/colors.scss';
+@import "../../styles/colors.scss";
+@import "../../styles/spaces.scss";
 
-.header_logo {
+.vertical_logo {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    gap: 16px;
-
-    padding: 24px;
-    
     img {
-        height: 48px;
-        width: 56px;
+        height: 82px;
+        width: 82px;
+
+        margin: 24px;
     }
 
     .title {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
 
-        gap: 2px;
+        gap: 12px;
 
         h1 {
             font-size: 1.2rem;
@@ -42,16 +41,15 @@
                 -webkit-background-clip: text;
                 background-clip: text;
             }
-
-            .abbreviate {
-                display: none;
-            }
         }
 
         h2 {
             font-size: 0.9rem;
             font-weight: 200;
+
             color: $secondary-color;
+
+            text-align: center;
         }
     }
 }
