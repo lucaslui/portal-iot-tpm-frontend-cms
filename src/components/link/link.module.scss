@@ -1,0 +1,32 @@
+@import '../../styles/colors.scss';
+@import '../../styles/spaces.scss';
+
+.link {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    color: #2e2c2c;
+    background-color: #18afaf;
+
+    text-decoration: none;
+
+    i {
+        font-size: 1rem;
+    }
+
+    span {
+        font-size: 1rem;
+    }
+
+    &:hover {
+        background-color: $background-color;
+    }
+}

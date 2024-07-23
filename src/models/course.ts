@@ -7,19 +7,19 @@ export type CourseModel = {
     imageUrl: string;
     landingPageUrl: string;
     registrationPeriod: {
-        startDate: Date;
-        endDate: Date;
+        startDate: string;
+        endDate: string;
     },
     classPeriod: {
-        startDate?: Date;
-        endDate?: Date;
-        dates: Date[];
+        startDate?: string;
+        endDate?: string;
+        dates?: string[];
     },
     classSchedules: {
         weekDay: string;
         startTime: string;
         endTime: string;
     },
-    updatedAt: Date;
-    createdAt: Date;
+    updatedAt: string;
+    createdAt: string;
 }

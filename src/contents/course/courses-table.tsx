@@ -11,6 +11,8 @@ import { loadCourses } from '../../services/course-service'
 import { CourseModel } from '../../models/course'
 import { PaginationModel } from '../../models/shared/pagination'
 import Loading from '../../components/loading/loading'
+import CustomLink from '../../components/link/link'
+import CompostEntityCell from '../../components/compost-entity-cell/compost-entity-cell'
 
 const CoursesTable: React.FC = () => {
     const [data, setData] = useState<PaginationModel<CourseModel>>()
@@ -77,19 +79,27 @@ const CoursesTable: React.FC = () => {
                     <tr>
                         <th>Curso</th>
                         <th>Tipo</th>
-                        <th>Estado</th>
-                        <th>Temp. Leitura</th>
+                        <th>Período de Inscrição</th>
+                        <th>Url de Inscrição</th>
                         <th>Atualizado em</th>
                         <th>Criado em</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.data?.map((course: CourseModel) => (
+                    {data?.data?.map(course => (
                         <tr key={course.id} onClick={() => handleRowOnClick(course.id)}>
-                            <td>{course.title}</td>
-                            <td>{course.description}</td>
+                            <td>
+                                <CompostEntityCell
+                                    imageUrl={course.imageUrl}
+                                    title={course.title}
+                                    description={course.description}
+                                />
+                            </td>
                             <td>{course.type}</td>
-                            <td>{course.landingPageUrl}</td>
+                            <td>{getShortStringDateFormat(course.registrationPeriod.startDate)} à {getShortStringDateFormat(course.registrationPeriod.endDate)}</td>
+                            <td>
+                                <CustomLink url={course.landingPageUrl} />
+                            </td>
                             <td>{getShortStringDateFormat(course.updatedAt)}</td>
                             <td>{getShortStringDateFormat(course.createdAt)}</td>
                         </tr>

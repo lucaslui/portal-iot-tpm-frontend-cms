@@ -15,27 +15,15 @@ export type LoadCoursesParams = {
     year?: number
 }
 
-export type AddCourseParams = {
-    title: string
-    description: string
-    type: string
-    state: string
-    readTime: number
-    content: string
-    imageBinary: File | null
-    categoryIds: string[]
-}
+export type EditCourseModel = Omit<CourseModel, 'id' | 'createdAt' | 'updatedAt'> & { imageBinary: File | null }
 
-const addCourse = async (params: AddCourseParams, accessToken: string): Promise<CourseModel> => {
+
+const addCourse = async (params: EditCourseModel, accessToken: string): Promise<CourseModel> => {
     const data = new FormData()
 
     data.append('title', params.title)
     data.append('description', params.description)
-    data.append('content', params.content)
     data.append('type', params.type)
-    data.append('state', params.state)
-    data.append('readTime', params.readTime.toString())
-    data.append('categoryIds', JSON.stringify(params.categoryIds))
 
     if (params.imageBinary) {
         data.append('imageBinary', params.imageBinary)
@@ -55,16 +43,12 @@ const addCourse = async (params: AddCourseParams, accessToken: string): Promise<
     }
 }
 
-const updateCourse = async (courseId: string, params: AddCourseParams, accessToken: string,): Promise<void> => {
+const updateCourse = async (courseId: string, params: EditCourseModel, accessToken: string,): Promise<void> => {
     const data = new FormData()
 
     data.append('title', params.title)
     data.append('description', params.description)
-    data.append('content', params.content)
     data.append('type', params.type)
-    data.append('state', params.state)
-    data.append('readTime', params.readTime.toString())
-    data.append('categoryIds', JSON.stringify(params.categoryIds))
 
     if (params.imageBinary) {
         data.append('imageBinary', params.imageBinary)

@@ -5,27 +5,57 @@
 .input_image {
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
-    align-items: stretch;
+    justify-content: flex-start;
+    align-items: center;
 
-    gap: 16px;
+    padding: 12px 16px 20px 16px;
 
-    width: 400px;
-    height: 300px;
+    border: 1px solid #636e7ba4;
+    border-radius: 4px;
 
-    padding: $inside-padding;
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
 
-    border: 1px solid #2d333b;
-    border-radius: 8px;
+        gap: 16px;
 
-    img {
-        width: 100%;
-        height: 170px;
+        img {
+            width: 408px;
+            height: 260px;
 
-        object-fit: contain;
+            object-fit: cover;
 
-        flex: 1;
+            border-radius: 8px;
+        }
 
-        border-radius: 8px;
+        input {
+            display: none;
+        }
+
+        label {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            width: 100%;
+
+            padding: 12px 16px;
+
+            border: 1px solid #636e7b;
+            border-radius: 4px;
+
+            color: $primary-color;
+            background-color: $background-button-color;
+
+            cursor: pointer;
+
+            &:hover {
+                background-color: #aaa;
+            }
+        }
     }
+
 }

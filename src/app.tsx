@@ -34,7 +34,7 @@ const App: React.FC = () => {
                                 <Route path='articles/form/:articleId' element={<AddArticle />} />
                                 <Route path='courses' element={<CoursesTable />} />
                                 <Route path='courses/form' element={<AddCourse />} />
-                                <Route path='courses/form/:articleId' element={<AddCourse />} />
+                                <Route path='courses/form/:courseId' element={<AddCourse />} />
                                 <Route path='categories' element={<CategoriesTable />} />
                                 <Route path='settings/profile' element={<Profile />} />
                                 <Route path='settings/password' element={<AccountSettings />} />

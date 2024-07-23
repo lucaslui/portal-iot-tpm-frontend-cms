@@ -266,27 +266,27 @@ const AddArticle: React.FC = () => {
                                 />
                             </div>
                         </div>
+                        <div className={styles.row}>
+                            <div className={`${styles.group} ${styles.full_width}`}>
+                                <label htmlFor="description">Descrição: <span>(máx: 200 caracteres)</span></label>
+                                <Input
+                                    id="description"
+                                    name="description"
+                                    placeholder='Digite o resumo do artigo...'
+                                    title={descriptionFieldError}
+                                    value={article.description}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
                     </div>
                     <InputImage
                         name='imageBinary'
                         imagePreview={article.imageUrl}
                         imageDefault={NoImage}
                         onChange={handleImageChange}
-                        label='Imagem de capa:'
+                        label='Imagem de capa'
                         placeholder='Insira a imagem de capa do artigo...' />
-                </div>
-                <div className={styles.row}>
-                    <div className={`${styles.group} ${styles.full_width}`}>
-                        <label htmlFor="description">Descrição: <span>(máx: 200 caracteres)</span></label>
-                        <TextArea
-                            id="description"
-                            name="description"
-                            placeholder='Digite o resumo do artigo...'
-                            title={descriptionFieldError}
-                            value={article.description}
-                            onChange={handleChange}
-                        />
-                    </div>
                 </div>
                 <div className={styles.row_editor}>
                     <label>Conteúdo:</label>

@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-
 import axios from 'axios'
 
 import styles from './course-form.module.scss'
 
 import AccountContext from '../../contexts/account-context'
-import { PageTitle, CustomButton, FormStatus, SelectTreeGroup, TextArea, Input } from '../../components'
-import RichTextEditor from '../../components/rich-text-editor/rich-text-editor'
-import { addArticle, updateArticle } from '../../services/article-service'
+import { PageTitle, CustomButton, FormStatus, TextArea, Input } from '../../components'
+import { addCourse, EditCourseModel, updateCourse } from '../../services/course-service'
 import InputImage from '../../components/input-image/input-image'
 import NoImage from '../../assets/imgs/no-image.svg'
 import Select from '../../components/select/select'
+import { CourseModel } from '../../models/course'
+import InputDate from '../../components/input-date/input-date'
 
 const AddCourse: React.FC = () => {
     const { getCurrentAccount } = useContext(AccountContext)
@@ -28,44 +28,56 @@ const AddCourse: React.FC = () => {
         successMessage: ''
     })
 
-    const [article, setArticle] = useState({
+    const [course, setCourse] = useState<EditCourseModel>({
         title: '',
         description: '',
+        observation: '',
         type: '',
-        state: '',
-        readTime: 5,
-        content: '',
         imageUrl: '',
         imageBinary: null,
-        categoryIds: [] as string[]
+        landingPageUrl: '',
+        registrationPeriod: {
+            startDate: '',
+            endDate: ''
+        },
+        classPeriod: {
+            startDate: '',
+            endDate: ''
+        },
+        classSchedules: {
+            weekDay: '',
+            endTime: '',
+            startTime: ''
+        }
     })
 
     useEffect(() => {
-        if (params.articleId) {
-            fetchArticleById()
-                .then((data) => setArticle({
+        if (params.courseId) {
+            fetchCourseById()
+                .then(data => setCourse({
                     title: data.title,
                     description: data.description,
+                    observation: data.observation,
                     type: data.type,
-                    state: data.state,
-                    readTime: data.readTime,
-                    content: data.content,
                     imageUrl: data.imageUrl,
                     imageBinary: null,
-                    categoryIds: data.categories?.map((category: any) => category.id)
+                    landingPageUrl: data.landingPageUrl,
+                    registrationPeriod: data.registrationPeriod,
+                    classPeriod: data.classPeriod,
+                    classSchedules: data.classSchedules
                 }))
                 .catch((error) => console.log(error))
         }
-    }, [params.articleId])
+    }, [params.courseId])
 
-    const fetchArticleById = async (): Promise<any> => {
-        const result = await axios(`${import.meta.env.VITE_API_URL}/api/articles/${params.articleId}`)
+    const fetchCourseById = async (): Promise<CourseModel> => {
+        const result = await axios(`${import.meta.env.VITE_API_URL}/api/courses/${params.courseId}`)
         return result.data
     }
 
-    // useEffect(() => {
-    //     console.log('article:', article)
-    // }, [article])
+    useEffect(() => {
+        console.log('course:', course)
+    }, [course])
 
     const [categories, setCategories] = useState([{
         id: '',
@@ -100,11 +112,11 @@ const AddCourse: React.FC = () => {
         }
     }
 
-    const titleFieldError = checkValidation('title', article)
-    const descriptionFieldError = checkValidation('description', article)
-    const typeFieldError = checkValidation('type', article)
-    const stateFieldError = checkValidation('state', article)
-    const readTimeFieldError = checkValidation('readTime', article)
+    const titleFieldError = checkValidation('title', course)
+    const descriptionFieldError = checkValidation('description', course)
+    const typeFieldError = checkValidation('type', course)
+    const stateFieldError = checkValidation('state', course)
+    const readTimeFieldError = checkValidation('readTime', course)
 
     const isFormInvalid = !!titleFieldError || !!descriptionFieldError || !!typeFieldError || !!stateFieldError || !!readTimeFieldError
 
@@ -148,13 +160,18 @@ const AddCourse: React.FC = () => {
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
-        setArticle({ ...article, [event.target.name]: event.target.value })
+        console.log('event:', event)
+        setCourse({ ...course, [event.target.name]: event.target.value })
+    }
+
+    const handleRegistrationPeriod = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setCourse({ ...course, registrationPeriod: { ...course.registrationPeriod, [event.target.name]: event.target.value + 'T00:00:00.000Z' } })
     }
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.files?.[0]) {
-            setArticle({
-                ...article,
+            setCourse({
+                ...course,
                 imageUrl: URL.createObjectURL(event.target.files?.[0]),
                 [event.target.name]: event.target.files?.[0]
             })
@@ -162,11 +179,11 @@ const AddCourse: React.FC = () => {
     }
 
     const handleSelectTreeChange = (event: any): void => {
-        setArticle(oldState => ({ ...oldState, categoryIds: Object.keys(event.value) }))
+        setCourse(oldState => ({ ...oldState, categoryIds: Object.keys(event.value) }))
     }
 
     const handleEditorChange = (content: string): void => {
-        setArticle(oldState => ({ ...oldState, content }))
+        setCourse(oldState => ({ ...oldState, content }))
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -176,11 +193,12 @@ const AddCourse: React.FC = () => {
                 setErrors(oldState => ({ ...oldState, mainError: '', successMessage: '' }))
                 setState(oldState => ({ ...oldState, isLoading: true }))
                 const token = getCurrentAccount()?.accessToken
-                if (params.articleId) {
-                    await updateArticle(params.articleId, article, token)
+                if (params.courseId) {
+                    const addCourse = { ...course }
+                    await updateCourse(params.courseId, addCourse, token)
                     setErrors(oldState => ({ ...oldState, successMessage: 'Artigo atualizado!' }))
                 } else {
-                    await addArticle(article, token)
+                    await addCourse(course, token)
                     setErrors(oldState => ({ ...oldState, successMessage: 'Artigo adicionado!' }))
                 }
                 setState(oldState => ({ ...oldState, isLoading: false }))
@@ -193,12 +211,12 @@ const AddCourse: React.FC = () => {
 
     return (
         <div className={styles.course_form}>
-            <PageTitle title='Adicionar/Editar Artigo' />
+            <PageTitle title='Adicionar/Editar Oferencimento de Cursos' />
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.row}>
-                    <div className={styles.col}>
-                        <div className={`${styles.row}`}>
-                            <div className={`${styles.group} ${styles.full}`}>
+                    <div className={`${styles.col} ${styles.full}`}>
+                        <div className={styles.row}>
+                            <div className={styles.group}>
                                 <label htmlFor="title">Título: <span>(máx: 100 caracteres)</span></label>
                                 <Input
                                     type="text"
@@ -206,74 +224,87 @@ const AddCourse: React.FC = () => {
                                     name="title"
                                     placeholder='Digite o título do artigo...'
                                     title={titleFieldError}
-                                    value={article.title}
+                                    value={course.title}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                        <div className={`${styles.row}`}>
-                            <div className={`${styles.group}`}>
-                                <label htmlFor="type">Tipo de conteúdo:</label>
+                        <div className={styles.row}>
+                            <div className={styles.group}>
+                                <label htmlFor="type">Tipo:</label>
                                 <Select
                                     className={styles.type}
                                     id="type"
                                     name="type"
                                     title={typeFieldError}
-                                    value={article.type}
+                                    value={course.type}
                                     onChange={handleChange}>
                                     <option value="" disabled selected hidden>Selecione o tipo do artigo...</option>
-                                    <option value='concepts'>Artigo</option>
-                                    <option value='news'>Notícia</option>
-                                    <option value='tutorials'>Tutorial</option>
-                                    <option value='projects'>Projeto</option>
+                                    <option value='Curso de Extensão da Unicamp'>Curso de Extensão da Unicamp</option>
                                 </Select>
                             </div>
-                            <div className={`${styles.group}`}>
-                                <label htmlFor="state">Estado de publicação:</label>
-                                <Select
-                                    className={styles.type}
-                                    id="state"
-                                    name="state"
-                                    title={stateFieldError}
-                                    value={article.state}
-                                    onChange={handleChange}>
-                                    <option value="" disabled selected hidden>Selecione o estado do artigo...</option>
-                                    <option value='draft'>Rascunho</option>
-                                    <option value='published'>Publicado</option>
-                                    <option value='deleted'>Excluído</option>
-                                </Select>
-                            </div>
-                            <div className={`${styles.group}`}>
-                                <label htmlFor="readTime">Tempo de leitura: <span>(em minutos)</span></label>
+                        </div>
+                        <div className={styles.row}>
+                            <div className={styles.group}>
+                                <label htmlFor="landingPageUrl">Link da página de inscrição:</label>
                                 <Input
-                                    type="number"
-                                    id="readTime"
-                                    name="readTime"
-                                    placeholder='Digite o tempo de leitura...'
-                                    title={readTimeFieldError}
-                                    value={article.readTime}
+                                    type="text"
+                                    id="landingPageUrl"
+                                    name="landingPageUrl"
+                                    placeholder='Digite o link da página de inscrição...'
+                                    value={course.landingPageUrl}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                        <div className={`${styles.row}`}>
-                            <div className={`${styles.group} ${styles.full_width}`}>
-                                <label htmlFor="type">Categoria:</label>
-                                <SelectTreeGroup
-                                    nodes={refitNodes(categories)}
-                                    value={buildValues(article.categoryIds)}
-                                    onChange={handleSelectTreeChange}
+                        <div className={styles.row}>
+                            <div className={styles.group}>
+                                <label htmlFor="observation">Observação:</label>
+                                <Input
+                                    type="text"
+                                    id="observation"
+                                    name="observation"
+                                    placeholder='Digite a observação do artigo...'
+                                    value={course.observation}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
                     </div>
-                    <InputImage
-                        name='imageBinary'
-                        imagePreview={article.imageUrl}
-                        imageDefault={NoImage}
-                        onChange={handleImageChange}
-                        label='Imagem de capa:'
-                        placeholder='Insira a imagem de capa do artigo...' />
+                    <div className={styles.col}>
+                        <InputImage
+                            name='imageBinary'
+                            imagePreview={course.imageUrl}
+                            imageDefault={NoImage}
+                            onChange={handleImageChange}
+                            label='Imagem de capa'
+                            placeholder='Insira a imagem de capa do artigo...' />
+                        <div className={styles.row}>
+                            <fieldset className={styles.fieldset}>
+                                <legend>Período de Inscrição</legend>
+                                <div className={styles.group}>
+                                    <label htmlFor="registration-period-start-date">Data Inicial:</label>
+                                    <InputDate
+                                        type="date"
+                                        id="registration-period-start-date"
+                                        name="startDate"
+                                        value={course.registrationPeriod.startDate.split('T')[0]}
+                                        onChange={handleRegistrationPeriod}
+                                    />
+                                </div>
+                                <div className={styles.group}>
+                                    <label htmlFor="registration-period-end-date">Data Final:</label>
+                                    <InputDate
+                                        type="date"
+                                        id="registration-period-end-date"
+                                        name="endDate"
+                                        value={course.registrationPeriod.endDate.split('T')[0]}
+                                        onChange={handleRegistrationPeriod}
+                                    />
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
                 </div>
                 <div className={styles.row}>
                     <div className={`${styles.group} ${styles.full_width}`}>
@@ -283,21 +314,21 @@ const AddCourse: React.FC = () => {
                             name="description"
                             placeholder='Digite o resumo do artigo...'
                             title={descriptionFieldError}
-                            value={article.description}
+                            value={course.description}
                             onChange={handleChange}
                         />
                     </div>
                 </div>
-                <div className={styles.row_editor}>
+                {/* <div className={styles.row_editor}>
                     <label>Conteúdo:</label>
                     <RichTextEditor
-                        value={article.content}
+                        value={course.content}
                         onChangeValue={handleEditorChange}
                     />
-                </div>
+                </div> */}
                 <div className={styles.flex_end}>
                     <FormStatus isLoading={state.isLoading} mainError={errors.mainError} successMessage={errors.successMessage} />
-                    <CustomButton disabled={isFormInvalid} type="submit"> {params.articleId ? 'Salvar' : 'Adicionar'} </CustomButton>
+                    <CustomButton disabled={isFormInvalid} type="submit"> {params.courseId ? 'Salvar' : 'Adicionar'} </CustomButton>
                 </div>
             </form>
         </div>

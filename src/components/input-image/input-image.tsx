@@ -10,17 +10,20 @@ type Props = {
 
 const InputImage: React.FC<Props> = (props: Props) => {
     return (
-        <div className={styles.input_image}>
-            <label htmlFor="image">{props.label}</label>
-            <img src={!props.imagePreview ? props.imageDefault : typeof props.imagePreview === 'string' ? props.imagePreview : URL.createObjectURL(props.imagePreview)} />
-            <input
-                id="image"
-                type="file"
-                accept="image/jpg, image/jpeg, image/png"
-                name={props.name}
-                onChange={props.onChange}
-            />
-        </div>
+        <fieldset className={styles.input_image}>
+            <legend>{props.label}</legend>
+            <div className={styles.container}>
+                <img src={!props.imagePreview ? props.imageDefault : typeof props.imagePreview === 'string' ? props.imagePreview : URL.createObjectURL(props.imagePreview)} />
+                <label htmlFor="image">Escolha uma imagem</label>
+                <input
+                    id="image"
+                    type="file"
+                    accept="image/jpg, image/jpeg, image/png"
+                    name={props.name}
+                    onChange={props.onChange}
+                />
+            </div>
+        </fieldset>
     )
 }
 

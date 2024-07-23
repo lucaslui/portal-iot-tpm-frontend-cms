@@ -7,7 +7,7 @@ import { loadArticles } from '../../services/article-service'
 import { ArticleModel } from '../../models/article'
 import { CustomButton } from '../../components'
 import { getShortStringDateFormat } from '../../utils/date'
-import ArticleCell from '../../components/article-cell/article-cell'
+import CompostEntityCell from '../../components/compost-entity-cell/compost-entity-cell'
 import TypeLabel from '../../components/type-label/type-label'
 import InputSearch from '../../components/input-search/search'
 import FilterWrapper from '../../components/filter-by-type/filter-wrapper'
@@ -89,7 +89,11 @@ const ArticlesTable: React.FC = () => {
                     {data?.data.map((article: ArticleModel) => (
                         <tr key={article.id} onClick={() => handleRowOnClick(article.id)}>
                             <td>
-                                <ArticleCell article={article} />
+                                <CompostEntityCell
+                                    imageUrl={article.imageUrl}
+                                    title={article.title}
+                                    description={article.description}
+                                />
                             </td>
                             <td><TypeLabel type={article.type} /></td>
                             <td><StateLabel state={article.state} /></td>
