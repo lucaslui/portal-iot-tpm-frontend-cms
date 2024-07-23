@@ -75,25 +75,6 @@ const AddCourse: React.FC = () => {
         return result.data
     }
 
-    useEffect(() => {
-        console.log('course:', course)
-    }, [course])
-
-    const [categories, setCategories] = useState([{
-        id: '',
-        name: '',
-        description: '',
-        imageUrl: '',
-        categoryParentId: '',
-        children: []
-    }])
-
-    useEffect((): void => {
-        fetchCategories()
-            .then((data) => setCategories(data))
-            .catch((error) => console.log(error))
-    }, [])
-
     const checkValidation = (field: string, formData: any): string => {
         const value = formData[field]
         switch (field) {
@@ -119,11 +100,6 @@ const AddCourse: React.FC = () => {
     const readTimeFieldError = checkValidation('readTime', course)
 
     const isFormInvalid = !!titleFieldError || !!descriptionFieldError || !!typeFieldError || !!stateFieldError || !!readTimeFieldError
-
-    const fetchCategories = async (): Promise<any> => {
-        const result = await axios(`${import.meta.env.VITE_API_URL}/api/categories/tree`)
-        return result.data
-    }
 
     const mapShortToLong = new Map([
         ['id', 'key'],
@@ -153,12 +129,6 @@ const AddCourse: React.FC = () => {
         return build
     }
 
-    const buildValues = (categoryIds: string[]): any => {
-        const values = {} as { [categoryId: string]: boolean }
-        categoryIds?.forEach(id => { values[id] = true })
-        return values
-    }
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
         console.log('event:', event)
         setCourse({ ...course, [event.target.name]: event.target.value })
@@ -176,14 +146,6 @@ const AddCourse: React.FC = () => {
                 [event.target.name]: event.target.files?.[0]
             })
         }
-    }
-
-    const handleSelectTreeChange = (event: any): void => {
-        setCourse(oldState => ({ ...oldState, categoryIds: Object.keys(event.value) }))
-    }
-
-    const handleEditorChange = (content: string): void => {
-        setCourse(oldState => ({ ...oldState, content }))
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {

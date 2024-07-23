@@ -19,7 +19,7 @@ const DashboardPage: React.FC = () => {
 
     const fetchData = async (): Promise<ArticleModel[]> => {
         const data = await loadArticles()
-        return data.articles
+        return data.data
     }
 
     const types = articles?.map((article) => article.type)

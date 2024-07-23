@@ -6,7 +6,7 @@ import axios from 'axios'
 import styles from './article-form.module.scss'
 
 import AccountContext from '../../contexts/account-context'
-import { PageTitle, CustomButton, FormStatus, SelectTreeGroup, TextArea, Input } from '../../components'
+import { PageTitle, CustomButton, FormStatus, SelectTreeGroup, Input } from '../../components'
 import RichTextEditor from '../../components/rich-text-editor/rich-text-editor'
 import { addArticle, updateArticle } from '../../services/article-service'
 import InputImage from '../../components/input-image/input-image'
