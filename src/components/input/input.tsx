@@ -23,12 +23,12 @@ const Input: React.FC<Props> = (props: Props) => {
                 {...props}
                 readOnly 
                 onFocus={enableInput}
-                data-status={props.title ? 'invalid' : 'valid'}
+                // data-status={props.title ? 'invalid' : 'valid'}
             />
             <span
                 title={getTitle()}
                 className={styles.status}>
-                {getStatus()}
+                {/* {getStatus()} */}
             </span>
         </div>
     )

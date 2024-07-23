@@ -17,14 +17,14 @@ const Select: React.FC<Props> = (props: Props) => {
         <div className={styles.select_wrapper}>
             <select
                 {...props}
-                data-status={props.title ? 'invalid' : 'valid'}
+                // data-status={props.title ? 'invalid' : 'valid'}
             >
                 {props.children}
             </select>
             <span
                 title={getTitle()}
                 className={styles.status}>
-                {getStatus()}
+                {/* {getStatus()} */}
             </span>
         </div>
     )

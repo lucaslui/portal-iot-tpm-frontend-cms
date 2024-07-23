@@ -6,6 +6,11 @@ export type CourseModel = {
     observation: string;
     imageUrl: string;
     landingPageUrl: string;
+    price: {
+        normal: string;
+        discount?: string;
+        until?: string;
+    },
     registrationPeriod: {
         startDate: string;
         endDate: string;

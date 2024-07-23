@@ -35,6 +35,9 @@ const AddCourse: React.FC = () => {
         type: '',
         imageUrl: '',
         imageBinary: null,
+        price: {
+            normal: '',
+        },
         landingPageUrl: '',
         registrationPeriod: {
             startDate: '',
@@ -59,6 +62,7 @@ const AddCourse: React.FC = () => {
                     description: data.description,
                     observation: data.observation,
                     type: data.type,
+                    price: data.price,
                     imageUrl: data.imageUrl,
                     imageBinary: null,
                     landingPageUrl: data.landingPageUrl,
@@ -241,37 +245,14 @@ const AddCourse: React.FC = () => {
                             onChange={handleImageChange}
                             label='Imagem de capa'
                             placeholder='Insira a imagem de capa do artigo...' />
-                        <div className={styles.row}>
-                            <fieldset className={styles.fieldset}>
-                                <legend>Período de Inscrição</legend>
-                                <div className={styles.group}>
-                                    <label htmlFor="registration-period-start-date">Data Inicial:</label>
-                                    <InputDate
-                                        type="date"
-                                        id="registration-period-start-date"
-                                        name="startDate"
-                                        value={course.registrationPeriod.startDate.split('T')[0]}
-                                        onChange={handleRegistrationPeriod}
-                                    />
-                                </div>
-                                <div className={styles.group}>
-                                    <label htmlFor="registration-period-end-date">Data Final:</label>
-                                    <InputDate
-                                        type="date"
-                                        id="registration-period-end-date"
-                                        name="endDate"
-                                        value={course.registrationPeriod.endDate.split('T')[0]}
-                                        onChange={handleRegistrationPeriod}
-                                    />
-                                </div>
-                            </fieldset>
-                        </div>
                     </div>
                 </div>
+
                 <div className={styles.row}>
                     <div className={`${styles.group} ${styles.full_width}`}>
                         <label htmlFor="description">Descrição: <span>(máx: 200 caracteres)</span></label>
-                        <TextArea
+                        <Input
+                            type="text"
                             id="description"
                             name="description"
                             placeholder='Digite o resumo do artigo...'
@@ -281,13 +262,71 @@ const AddCourse: React.FC = () => {
                         />
                     </div>
                 </div>
-                {/* <div className={styles.row_editor}>
-                    <label>Conteúdo:</label>
-                    <RichTextEditor
-                        value={course.content}
-                        onChangeValue={handleEditorChange}
-                    />
-                </div> */}
+                <div className={styles.row}>
+                    <div className={styles.row}>
+                        <fieldset className={styles.fieldset}>
+                            <legend>Preço</legend>
+                            <div className={styles.group}>
+                                <label htmlFor="price-normal">Normal:</label>
+                                <Input
+                                    type="text"
+                                    id="price-normal"
+                                    name="normal"
+                                    placeholder='Digite a observação do artigo...'
+                                    value={course.price?.normal}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className={styles.group}>
+                                <label htmlFor="price-discount">Desconto:</label>
+                                <Input
+                                    type="text"
+                                    id="price-discount"
+                                    name="discount"
+                                    placeholder='Digite a observação do artigo...'
+                                    value={course.price?.discount}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className={styles.group}>
+                                <label htmlFor="price-until">Até:</label>
+                                <InputDate
+                                    type="date"
+                                    id="price-until"
+                                    name="until"
+                                    placeholder='Digite a observação do artigo...'
+                                    value={course.price?.until?.split('T')[0]}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div className={styles.row}>
+                        <fieldset className={styles.fieldset}>
+                            <legend>Período de Inscrição</legend>
+                            <div className={styles.group}>
+                                <label htmlFor="registration-period-start-date">Data Inicial:</label>
+                                <InputDate
+                                    type="date"
+                                    id="registration-period-start-date"
+                                    name="startDate"
+                                    value={course.registrationPeriod.startDate.split('T')[0]}
+                                    onChange={handleRegistrationPeriod}
+                                />
+                            </div>
+                            <div className={styles.group}>
+                                <label htmlFor="registration-period-end-date">Data Final:</label>
+                                <InputDate
+                                    type="date"
+                                    id="registration-period-end-date"
+                                    name="endDate"
+                                    value={course.registrationPeriod.endDate.split('T')[0]}
+                                    onChange={handleRegistrationPeriod}
+                                />
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
                 <div className={styles.flex_end}>
                     <FormStatus isLoading={state.isLoading} mainError={errors.mainError} successMessage={errors.successMessage} />
                     <CustomButton disabled={isFormInvalid} type="submit"> {params.courseId ? 'Salvar' : 'Adicionar'} </CustomButton>
