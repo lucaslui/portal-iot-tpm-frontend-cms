@@ -9,9 +9,9 @@ const Input: React.FC<Props> = (props: Props) => {
         event.target.readOnly = false
     }
 
-    const getStatus = (): string => {
-        return props.title ? '🔴' : '🟢'
-    }
+    // const getStatus = (): string => {
+    //     return props.title ? '🔴' : '🟢'
+    // }
 
     const getTitle = (): string => {
         return props.title || 'Tudo certo'

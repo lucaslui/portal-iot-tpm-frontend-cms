@@ -5,7 +5,7 @@ import axios from 'axios'
 import styles from './course-form.module.scss'
 
 import AccountContext from '../../contexts/account-context'
-import { PageTitle, CustomButton, FormStatus, TextArea, Input } from '../../components'
+import { PageTitle, CustomButton, FormStatus, Input } from '../../components'
 import { addCourse, EditCourseModel, updateCourse } from '../../services/course-service'
 import InputImage from '../../components/input-image/input-image'
 import NoImage from '../../assets/imgs/no-image.svg'

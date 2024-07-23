@@ -5,9 +5,9 @@ import styles from './select.module.scss'
 type Props = React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
 
 const Select: React.FC<Props> = (props: Props) => {
-    const getStatus = (): string => {
-        return props.title ? '🔴' : '🟢'
-    }
+    // const getStatus = (): string => {
+    //     return props.title ? '🔴' : '🟢'
+    // }
 
     const getTitle = (): string => {
         return props.title || 'Tudo certo'
