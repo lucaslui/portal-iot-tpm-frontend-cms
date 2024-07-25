@@ -25,6 +25,8 @@
 
             gap: 12px;
 
+            flex: 1;
+
             border: 1px solid #636e7ba4;
             border-radius: 4px;
 
@@ -83,6 +85,19 @@
                         margin: 8px;
                         font-size: 1rem;
                     }
+                }
+            }
+
+            .checkbox {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+
+                gap: 8px;
+
+                label {
+                    font-size: 1rem;
                 }
             }
         }

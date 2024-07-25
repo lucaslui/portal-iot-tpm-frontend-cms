@@ -11,6 +11,10 @@ export type CourseModel = {
         discount?: string;
         until?: string;
     },
+    contact: {
+        phone: string;
+        email: string;
+    },
     registrationPeriod: {
         startDate: string;
         endDate: string;
