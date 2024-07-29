@@ -5,9 +5,9 @@ import styles from './input.module.scss'
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 const Input: React.FC<Props> = (props: Props) => {
-    const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
-        event.target.readOnly = false
-    }
+    // const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
+    //     event.target.readOnly = false
+    // }
 
     // const getStatus = (): string => {
     //     return props.title ? '🔴' : '🟢'
@@ -21,8 +21,7 @@ const Input: React.FC<Props> = (props: Props) => {
         <div className={styles.input_wrapper}>
             <input
                 {...props}
-                readOnly 
-                onFocus={enableInput}
+                // onFocus={enableInput}
                 // data-status={props.title ? 'invalid' : 'valid'}
             />
             <span

@@ -26,7 +26,7 @@ const ParticlesBackground: React.FC = () => {
                 "value": 90,
                 "density": {
                     "enable": true,
-                    "value_area": 800
+                    "value_area": 1500
                 }
             },
             "color": {
@@ -64,7 +64,7 @@ const ParticlesBackground: React.FC = () => {
                     "enable": false,
                     "speed": 40,
                     "size_min": 0.1,
-                    "sync": false
+                    "sync": true
                 }
             },
             "line_linked": {
@@ -89,7 +89,7 @@ const ParticlesBackground: React.FC = () => {
                 }
             }
         },
-        "retina_detect": true
+        "fpsLimit": 20,
     }
 
     return (

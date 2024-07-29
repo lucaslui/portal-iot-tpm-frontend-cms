@@ -64,7 +64,7 @@ const SignInPage: React.FC = () => {
 
     return (
         <form className={styles.signin} onSubmit={handleSubmit}>
-            <h2>Entrar</h2>
+            <h2>Acesso de Autores</h2>
             <Input onChange={handleChange} title={state.emailError} type="email" name="email" placeholder="Digite seu e-mail" />
             <Input onChange={handleChange} title={state.passwordError} type="password" name="password" placeholder="Digite sua senha" />
             <CustomButton disabled={state.isFormInvalid} type="submit"> Entrar </CustomButton>
