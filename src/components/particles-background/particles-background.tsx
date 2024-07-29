@@ -23,10 +23,10 @@ const ParticlesBackground: React.FC = () => {
         },
         "particles": {
             "number": {
-                "value": 90,
+                "value": 100,
                 "density": {
                     "enable": true,
-                    "value_area": 1500
+                    "value_area": 3000
                 }
             },
             "color": {
