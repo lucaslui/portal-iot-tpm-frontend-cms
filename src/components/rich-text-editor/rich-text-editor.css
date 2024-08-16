@@ -19,6 +19,8 @@
     border-bottom-right-radius: 4px;
 
     font-family: 'Orbitron', sans-serif;
+
+    min-height: 320px;
 }
 
 .ql-editor.ql-blank::before {
